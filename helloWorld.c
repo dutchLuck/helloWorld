@@ -23,6 +23,11 @@ int main( int  argc, char *  argv[])
 #ifdef __TIME__
 	printf( "at %s\n", __TIME__ );
 #endif
-	printf( "%s\n", __VERSION__ );
+#ifdef __GNUC__
+	printf( "Compiled by Gnu c or compatible compiler\n" );
+#else
+	printf( "Compiler does not claim to be compatible with gnu c\" );
+#endif
+	printf( "Compiler version '%s'\n", __VERSION__ );
 	return 0;
 }

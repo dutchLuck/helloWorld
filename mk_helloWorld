@@ -1,0 +1,1 @@
+cc -Wall -o helloWorld helloWorld.c
