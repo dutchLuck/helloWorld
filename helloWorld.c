@@ -50,19 +50,24 @@ int main( int  argc, char *  argv[])
 #endif
 	printf( "Compiler version '%s'\n", __VERSION__ );
 #ifdef __unix__
-	printf( "This compiler system claims to be a unix system.\n" );
+	printf( "This compiler system claims to be a unix based system.\n" );
 #else
 	printf( "This compiler system doesn't define __unix__.\n" );
 #endif
 #ifdef __linux__
-	printf( "This compiler system claims to be a linux system.\n" );
+	printf( "This compiler system claims to be a linux based system.\n" );
 #else
 	printf( "This compiler system doesn't define __linux__.\n" );
 #endif
 #ifdef __APPLE__
-	printf( "This compiler system claims to be an apple system.\n" );
+	printf( "This compiler system claims to be an apple based system.\n" );
 #else
 	printf( "This compiler system doesn't define __APPLE__.\n" );
+#endif
+#ifdef __CYGWIN__
+	printf( "This compiler system claims to be a cygwin based system.\n" );
+#else
+	printf( "This compiler system doesn't define __CYGWIN__.\n" );
 #endif
 	return 0;
 }
