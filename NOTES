@@ -1,0 +1,14 @@
+Sat 11 Nov 2017 17:37:55 AEDT
+Apple Mac 10.11.6 system
+========================
+Hello World, courtesy of './helloWorld'
+Compiled from helloWorld.c, on Nov 11 2017 at 17:37:25
+Source File last Modified on Sat Nov 11 17:37:18 2017
+Compiler claims conformance to ISO Standard C.
+Compiler claims conformance to ISO Standard C version 201112.
+Compiled by gnu gcc or compatible compiler
+Compiler version '4.2.1 Compatible Apple LLVM 8.0.0 (clang-800.0.42.1)'
+This compiler system doesn't define __unix__.
+This compiler system doesn't define __linux__.
+This compiler system claims to be an apple based system.
+This compiler system doesn't define __CYGWIN__.
