@@ -69,5 +69,10 @@ int main( int  argc, char *  argv[])
 #else
 	printf( "This compiler system doesn't define __CYGWIN__.\n" );
 #endif
+#ifdef __OpenBSD__
+	printf( "This compiler system claims to be an OpenBSD based system.\n" );
+#else
+	printf( "This compiler system doesn't define __OpenBSD__.\n" );
+#endif
 	return 0;
 }
