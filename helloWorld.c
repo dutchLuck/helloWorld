@@ -33,6 +33,16 @@ int main( int  argc, char *  argv[])
 #ifdef __TIMESTAMP__
 	printf( "Source File last Modified on %s\n", __TIMESTAMP__ );
 #endif
+#ifdef __STDC__
+	printf( "Compiler claims conformance to ISO Standard C.\n" );
+#else
+	printf( "Compiler does not claim comformance with ISO Standard C.\n" );
+#endif
+#ifdef __STDC_VERSION__
+	printf( "Compiler claims conformance to ISO Standard C version %ld.\n", __STDC_VERSION__ );
+#else
+	printf( "Compiler does not define ISO Standard C version date.\n" );
+#endif
 #ifdef __GNUC__
 	printf( "Compiled by gnu gcc or compatible compiler\n" );
 #else
@@ -40,10 +50,19 @@ int main( int  argc, char *  argv[])
 #endif
 	printf( "Compiler version '%s'\n", __VERSION__ );
 #ifdef __unix__
-	printf( "This system claims to be a unix system\n" );
+	printf( "This compiler system claims to be a unix system.\n" );
+#else
+	printf( "This compiler system doesn't define __unix__.\n" );
 #endif
 #ifdef __linux__
-	printf( "This system claims to be a linux system\n" );
+	printf( "This compiler system claims to be a linux system.\n" );
+#else
+	printf( "This compiler system doesn't define __linux__.\n" );
+#endif
+#ifdef __APPLE__
+	printf( "This compiler system claims to be an apple system.\n" );
+#else
+	printf( "This compiler system doesn't define __APPLE__.\n" );
 #endif
 	return 0;
 }
