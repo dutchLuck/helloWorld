@@ -12,3 +12,18 @@ This compiler system doesn't define __unix__.
 This compiler system doesn't define __linux__.
 This compiler system claims to be an apple based system.
 This compiler system doesn't define __CYGWIN__.
+
+Sat Nov 11 17:43:23 AEDT 2017
+Ubuntu 14.04 system
+===================
+Hello World, courtesy of './helloWorld'
+Compiled from helloWorld.c, on Nov 11 2017 at 17:43:03
+Source File last Modified on Sat Nov 11 17:42:53 2017
+Compiler claims conformance to ISO Standard C.
+Compiler does not define ISO Standard C version date.
+Compiled by gnu gcc or compatible compiler
+Compiler version '4.8.4'
+This compiler system claims to be a unix based system.
+This compiler system claims to be a linux based system.
+This compiler system doesn't define __APPLE__.
+This compiler system doesn't define __CYGWIN__.
