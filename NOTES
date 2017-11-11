@@ -44,3 +44,20 @@ This compiler system claims to be an apple based system.
 This compiler system doesn't define __CYGWIN__.
 This compiler system doesn't define __OpenBSD__.
 
+Sat Nov 11 09:03:36 UTC 2017
+OpenBSD 6.2 (FuguIta 6.2 live)
+OpenBSD f.gateway 6.2 RDROOT.MP#1 amd64
+=======================================
+Hello World, courtesy of './helloWorld'
+Compiled from helloWorld.c, on Nov 11 2017 at 09:00:11
+Source File last Modified on Sat Nov 11 09:00:04 2017
+Compiler claims conformance to ISO Standard C.
+Compiler claims conformance to ISO Standard C version 201112.
+Compiled by gnu gcc or compatible compiler
+Compiler version '4.2.1 Compatible OpenBSD Clang 4.0.0 (tags/RELEASE_400/final)'
+This compiler system claims to be a unix based system.
+This compiler system doesn't define __linux__.
+This compiler system doesn't define __APPLE__.
+This compiler system doesn't define __CYGWIN__.
+This compiler system claims to be an OpenBSD based system.
+
