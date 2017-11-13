@@ -74,5 +74,10 @@ int main( int  argc, char *  argv[])
 #else
 	printf( "This compiler system doesn't define __OpenBSD__.\n" );
 #endif
+#ifdef __MINGW32__
+	printf( "This compiler system claims to be an MINGW32 Windows based system.\n" );
+#else
+	printf( "This compiler system doesn't define __MINGW32__.\n" );
+#endif
 	return 0;
 }
