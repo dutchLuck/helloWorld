@@ -61,3 +61,19 @@ This compiler system doesn't define __APPLE__.
 This compiler system doesn't define __CYGWIN__.
 This compiler system claims to be an OpenBSD based system.
 
+Sun, Dec 31, 2017  7:22:30 PM
+Cygwin64 system
+===============
+Hello World, courtesy of './helloWorld'
+Compiled from helloWorld.c, on Dec 31 2017 at 19:20:54
+Source File last Modified on Sat Nov 11 22:06:33 2017
+Compiler claims conformance to ISO Standard C.
+Compiler claims conformance to ISO Standard C version 201112.
+Compiled by gnu gcc or compatible compiler
+Compiler version '6.4.0'
+This compiler system claims to be a unix based system.
+This compiler system doesn't define __linux__.
+This compiler system doesn't define __APPLE__.
+This compiler system claims to be a cygwin based system.
+This compiler system doesn't define __OpenBSD__.
+
