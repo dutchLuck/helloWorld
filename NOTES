@@ -97,3 +97,21 @@ This compiler system doesn't define __OpenBSD__.
 This compiler system doesn't define __MINGW32__.
 This compiler system doesn't define __MINGW64__.
 
+Tue 31 Dec 23:32:08 AEDT 2019
+Ubuntu 18.04 LTS system
+=======================
+Hello World, courtesy of './helloWorld'
+Compiled from helloWorld.c, on Dec 31 2019 at 23:30:50
+Source File last Modified on Thu Dec 21 20:20:29 2017
+Compiler claims conformance to ISO Standard C.
+Compiler claims conformance to ISO Standard C version 201112.
+Compiled by gnu gcc or compatible compiler
+Compiler version '7.4.0'
+This compiler system claims to be a unix based system.
+This compiler system claims to be a linux based system.
+This compiler system doesn't define __APPLE__.
+This compiler system doesn't define __CYGWIN__.
+This compiler system doesn't define __OpenBSD__.
+This compiler system doesn't define __MINGW32__.
+This compiler system doesn't define __MINGW64__.
+
