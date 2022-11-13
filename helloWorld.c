@@ -43,12 +43,21 @@ int main( int  argc, char *  argv[])
 #else
 	printf( "Compiler does not define ISO Standard C version date.\n" );
 #endif
+#ifdef __STDC_HOSTED__
+	printf( "Compiler claims support for entire standard library.\n" );
+#else
+	printf( "Compiler does not claim support for entire standard library.\n" );
+#endif
 #ifdef __GNUC__
 	printf( "Compiled by gnu gcc or compatible compiler\n" );
 #else
 	printf( "Compiler does not claim to be compatible with gnu gcc\n" );
 #endif
+#ifdef __VERSION__
 	printf( "Compiler version '%s'\n", __VERSION__ );
+#else
+	printf( "Compiler does not define version with __VERSION__\n", __VERSION__ );
+#endif
 #ifdef __unix__
 	printf( "This compiler system claims to be a unix based system.\n" );
 #else
