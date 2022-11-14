@@ -16,23 +16,50 @@
  */
 
 
-#include  <stdio.h>	/* printf() */
+#include  <stdio.h>	/* printf(), perror() */
+#include  <string.h>	/* strdup() */
+#include  <libgen.h>	/* basename() */
 
 int main( int  argc, char *  argv[])
 {
-	printf( "Hello World, courtesy of '%s'\n", argv[0] );
+	char *  exePath;
+	char *  name;	/* Name of executable */
+
+	name = argv[0];	/* default to using argv for executable name */
+	if(( exePath = strdup( argv[0] )) == NULL )  {
+		perror( "?? Unable to duplicate path to this executable" );
+	}
+	else if(( name = basename( exePath )) == NULL )  {
+		perror( "?? Unable to obtain the name of this executable" );
+		name = argv[0];
+	}
+	printf( "\nHello World, courtesy of '%s'\n\n", name );
+
 #ifdef __FILE__
-	printf( "Compiled from %s, ", __FILE__ );
+	printf( "'%s' compiled from '%s', ", name, __FILE__ );
+#else
+	printf( "'%s' compiled from an unspecified source file, ", name );
 #endif
 #ifdef __DATE__
 	printf( "on %s ", __DATE__ );
+#else
+	printf( "on an unspecified date " );
 #endif
 #ifdef __TIME__
 	printf( "at %s\n", __TIME__ );
+#else
+	printf( "at an unspecified time\n" );
+#endif
+
+#ifdef __LINE__
+	printf( "Now executing line %d in function '%s'\n", __LINE__, __func__ );
+#else
+	printf( "Unable to specify this line that is being executed\n" );
 #endif
 #ifdef __TIMESTAMP__
-	printf( "Source File last Modified on %s\n", __TIMESTAMP__ );
+	printf( "Source File '%s' last Modified on %s\n", __FILE__, __TIMESTAMP__ );
 #endif
+	printf( "\n" );
 #ifdef __STDC__
 	printf( "Compiler claims conformance to ISO Standard C.\n" );
 #else
@@ -58,6 +85,7 @@ int main( int  argc, char *  argv[])
 #else
 	printf( "Compiler does not define version with __VERSION__\n", __VERSION__ );
 #endif
+	printf( "\n" );
 #ifdef __unix__
 	printf( "This compiler system claims to be a unix based system.\n" );
 #else
