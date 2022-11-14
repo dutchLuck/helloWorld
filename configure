@@ -8,7 +8,7 @@ OPTIONS=-Wall
 TRGT=$NAME
 SRC=$NAME.c
 #
-if [[ "$OS_TYPE" == "cygwin" ]] ; then
+if [[ "$OSTYPE" == "cygwin" ]] ; then
   TRGT=$NAME.exe
 fi
 #
