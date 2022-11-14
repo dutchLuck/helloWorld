@@ -8,8 +8,13 @@ OPTIONS=-Wall
 TRGT=$NAME
 SRC=$NAME.c
 #
+# echo $OSTYPE
+#
 if [[ "$OSTYPE" == "cygwin" ]] ; then
   TRGT=$NAME.exe
+elif [[ "$OSTYPE" == "msys" ]] ; then
+  TRGT=$NAME.exe
+  COMPILER=gcc
 fi
 #
 echo "$TRGT: $SRC" > $OP_FILE_NAME
