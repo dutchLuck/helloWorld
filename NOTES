@@ -139,3 +139,27 @@ This compiler system doesn't define __OpenBSD__.
 This compiler system doesn't define __MINGW32__.
 This compiler system doesn't define __MINGW64__.
 
+Mon 14 Nov 2022 16:49:09 AEDT
+Ubuntu 20.04 LTS system
+=======================
+
+Hello World, courtesy of 'helloWorld'
+
+'helloWorld' compiled from 'helloWorld.c', on Nov 14 2022 at 14:35:40
+Now executing line 55 in function 'main'
+Source File 'helloWorld.c' last Modified on Mon Nov 14 14:35:32 2022
+
+Compiler claims conformance to ISO Standard C.
+Compiler claims conformance to ISO Standard C version 201710.
+Compiler claims support for entire standard library.
+Compiled by gnu gcc or compatible compiler
+Compiler version '9.4.0'
+
+This compiler system claims to be a unix based system.
+This compiler system claims to be a linux based system.
+This compiler system doesn't define __APPLE__.
+This compiler system doesn't define __CYGWIN__.
+This compiler system doesn't define __OpenBSD__.
+This compiler system doesn't define __MINGW32__.
+This compiler system doesn't define __MINGW64__.
+
