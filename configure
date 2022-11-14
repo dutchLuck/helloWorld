@@ -1,0 +1,27 @@
+#! /bin/sh
+#
+NAME=helloWorld
+#
+OP_FILE_NAME=Makefile
+COMPILER=cc
+OPTIONS=-Wall
+TRGT=$NAME
+SRC=$NAME.c
+#
+if [[ "$OS_TYPE" == "cygwin" ]] ; then
+  TRGT=$NAME.exe
+fi
+#
+echo "$TRGT: $SRC" > $OP_FILE_NAME
+echo "\t$COMPILER $OPTIONS -o $TRGT $SRC" >> $OP_FILE_NAME
+echo "" >> $OP_FILE_NAME
+#
+echo "check: $TRGT" >> $OP_FILE_NAME
+echo "\t./$TRGT" >> $OP_FILE_NAME
+echo "" >> $OP_FILE_NAME
+#
+echo "clean:" >> $OP_FILE_NAME
+echo "\trm -f $TRGT $NAME.o" >> $OP_FILE_NAME
+echo "" >> $OP_FILE_NAME
+#
+
