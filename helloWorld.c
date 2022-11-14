@@ -111,6 +111,11 @@ int main( int  argc, char *  argv[])
 #else
 	printf( "This compiler system doesn't define __OpenBSD__.\n" );
 #endif
+#ifdef __FreeBSD__
+	printf( "This compiler system claims to be an FreeBSD based system.\n" );
+#else
+	printf( "This compiler system doesn't define __FreeBSD__.\n" );
+#endif
 #ifdef __MINGW32__
 	printf( "This compiler system claims to be a MINGW32 Windows based system.\n" );
 #else
