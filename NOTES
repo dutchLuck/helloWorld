@@ -115,3 +115,27 @@ This compiler system doesn't define __OpenBSD__.
 This compiler system doesn't define __MINGW32__.
 This compiler system doesn't define __MINGW64__.
 
+Mon 14 Nov 2022 16:35:52 AEDT
+Apple Ventura 13.0.1 system
+===========================
+
+Hello World, courtesy of 'helloWorld'
+
+'helloWorld' compiled from 'helloWorld.c', on Nov 14 2022 at 14:30:16
+Now executing line 55 in function 'main'
+Source File 'helloWorld.c' last Modified on Mon Nov 14 14:30:12 2022
+
+Compiler claims conformance to ISO Standard C.
+Compiler claims conformance to ISO Standard C version 201710.
+Compiler claims support for entire standard library.
+Compiled by gnu gcc or compatible compiler
+Compiler version 'Apple LLVM 14.0.0 (clang-1400.0.29.202)'
+
+This compiler system doesn't define __unix__.
+This compiler system doesn't define __linux__.
+This compiler system claims to be an apple based system.
+This compiler system doesn't define __CYGWIN__.
+This compiler system doesn't define __OpenBSD__.
+This compiler system doesn't define __MINGW32__.
+This compiler system doesn't define __MINGW64__.
+
