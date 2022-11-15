@@ -17,9 +17,10 @@ jobs:
     - name: Create Makefile
       run: ./configure
 
-    - name: Install dependencies
+    - name: Run make to create executable
       run: make
+      run: echo "🍏 The make status is ${{ job.status }}."
 
-    - name: Run check
+    - name: Run make check to see output of executable
       run: make check
-
+      run: echo "🍏 The make check status is ${{ job.status }}."
