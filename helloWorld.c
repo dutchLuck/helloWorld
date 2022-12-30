@@ -2,6 +2,11 @@
  *
  * H E L L O W O R L D
  *
+ * Explore aspects of the compiler MACRO definitions
+ *  and underlying system capabilties.
+ *
+ * helloWorld.c last edited on Fri Dec 30 14:21:25 2022 
+ *
  */
 
 /*
@@ -19,8 +24,66 @@
 #include  <stdio.h>	/* printf(), perror() */
 #include  <string.h>	/* strdup() */
 #include  <libgen.h>	/* basename() */
+#include  <sys/param.h>	/* Endian macros? */
+#include  <time.h>		/* clock_getres() */
 
-int main( int  argc, char *  argv[])
+
+int  getClockResolution( clockid_t  clockIdentifier, struct timespec *  resolution )
+{
+  long  result;
+  
+  resolution->tv_nsec = (long) 0;	/* Ensure structure is zero'd */
+  resolution->tv_sec = (time_t) 0;	/* Ensure structure is zero'd */
+  result = clock_getres( clockIdentifier, resolution );
+  if( result != 0L )  {
+    printf( "? clock_getres() failed as it returned a value of %ld ?\n", result );
+    perror( "clock_getres()" );
+    return( 1 );
+  }
+  else  {
+    printf( "%ld [nS] resolution ", resolution->tv_nsec );
+  }
+  return( 0 );
+}
+
+
+void  printClockResolutions( void )
+{
+  clockid_t  clockType;
+  struct timespec  resolution;
+  
+  clockType = CLOCK_REALTIME;
+  if( getClockResolution( clockType, &resolution ) == 0 )
+    printf( "claimed for CLOCK_REALTIME\n" );
+#ifdef  CLOCK_MONOTONIC
+  clockType = CLOCK_MONOTONIC;
+  if( getClockResolution( clockType, &resolution ) == 0 )
+    printf( "claimed for CLOCK_MONOTONIC\n" );
+#endif
+#ifdef  CLOCK_PROCESS_CPUTIME_ID
+  clockType = CLOCK_PROCESS_CPUTIME_ID;
+  if( getClockResolution( clockType, &resolution ) == 0 )
+    printf( "claimed for CLOCK_PROCESS_CPUTIME_ID\n" );
+#endif
+#ifdef  CLOCK_THREAD_CPUTIME_ID
+  clockType = CLOCK_THREAD_CPUTIME_ID;
+  if( getClockResolution( clockType, &resolution ) == 0 )
+    printf( "claimed for CLOCK_THREAD_CPUTIME_ID\n" );
+#endif
+#ifdef  CLOCK_REALTIME_HR
+  clockType = CLOCK_REALTIME_HR;
+  if( getClockResolution( clockType, &resolution ) == 0 )
+    printf( "claimed for CLOCK_REALTIME_HR\n" );
+#endif
+#ifdef  CLOCK_MONOTONIC_HR
+  clockType = CLOCK_MONOTONIC_HR;
+  if( getClockResolution( clockType, &resolution ) == 0 )
+    printf( "claimed for CLOCK_MONOTONIC_HR\n" );
+#endif
+}
+
+
+int  main( int  argc, char *  argv[])
 {
 	char *  exePath;
 	char *  name;	/* Name of executable */
@@ -126,5 +189,18 @@ int main( int  argc, char *  argv[])
 #else
 	printf( "This compiler system doesn't define __MINGW64__.\n" );
 #endif
+#ifdef __BYTE_ORDER
+	printf( "This compiler system claims to be a " );
+        if( __BYTE_ORDER == __BIG_ENDIAN )  printf( "big" );
+        else if( __BYTE_ORDER == __LITTLE_ENDIAN )  printf( "little" );
+        else if( __BYTE_ORDER == __PDP_ENDIAN )  printf( "little (word swapped)" );
+        else printf( "unknown" );
+        printf( " endian based system.\n" );
+#else
+	printf( "This compiler system doesn't define __BYTE_ORDER, at least not in <sys/param.h>\n" );
+#endif
+	printf( "\nThis compiler system has the following resolution timers/clocks; -\n" );
+	printClockResolutions();
+	
 	return 0;
 }
