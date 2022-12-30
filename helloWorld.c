@@ -189,11 +189,11 @@ int  main( int  argc, char *  argv[])
 #else
 	printf( "This compiler system doesn't define __MINGW64__.\n" );
 #endif
-#ifdef __BYTE_ORDER
+#ifdef __BYTE_ORDER__
 	printf( "This compiler system claims to be a " );
-        if( __BYTE_ORDER == __BIG_ENDIAN )  printf( "big" );
-        else if( __BYTE_ORDER == __LITTLE_ENDIAN )  printf( "little" );
-        else if( __BYTE_ORDER == __PDP_ENDIAN )  printf( "little (word swapped)" );
+        if( __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__ )  printf( "big" );
+        else if( __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__ )  printf( "little" );
+        else if( __BYTE_ORDER__ == __ORDER_PDP_ENDIAN__ )  printf( "little (word swapped)" );
         else printf( "unknown" );
         printf( " endian based system.\n" );
 #else
