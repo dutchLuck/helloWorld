@@ -60,6 +60,26 @@ void  printClockResolutions( void )
   if( getClockResolution( clockType, &resolution ) == 0 )
     printf( "claimed for CLOCK_MONOTONIC\n" );
 #endif
+#ifdef  CLOCK_MONOTONIC_RAW
+  clockType = CLOCK_MONOTONIC_RAW;
+  if( getClockResolution( clockType, &resolution ) == 0 )
+    printf( "claimed for CLOCK_MONOTONIC_RAW\n" );
+#endif
+#ifdef  CLOCK_MONOTONIC_RAW_APPROX
+  clockType = CLOCK_MONOTONIC_RAW_APPROX;
+  if( getClockResolution( clockType, &resolution ) == 0 )
+    printf( "claimed for CLOCK_MONOTONIC_RAW_APPROX\n" );
+#endif
+#ifdef  CLOCK_UPTIME_RAW
+  clockType = CLOCK_UPTIME_RAW;
+  if( getClockResolution( clockType, &resolution ) == 0 )
+    printf( "claimed for CLOCK_UPTIME_RAW\n" );
+#endif
+#ifdef  CLOCK_UPTIME_RAW_APPROX
+  clockType = CLOCK_UPTIME_RAW_APPROX;
+  if( getClockResolution( clockType, &resolution ) == 0 )
+    printf( "claimed for CLOCK_UPTIME_RAW_APPROX\n" );
+#endif
 #ifdef  CLOCK_PROCESS_CPUTIME_ID
   clockType = CLOCK_PROCESS_CPUTIME_ID;
   if( getClockResolution( clockType, &resolution ) == 0 )
