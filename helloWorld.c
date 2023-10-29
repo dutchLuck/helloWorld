@@ -168,20 +168,20 @@ int  main( int  argc, char *  argv[])
 	printf( "Compiler does not claim to be compatible with gnu gcc\n" );
 #endif
 #ifdef __VERSION__
-	printf( "Compiler defines __VERSION__\n" );
+	printf( "__VERSION__ defined - " );
 	printf( "Compiler version '%s'\n", __VERSION__ );
 #else
 	printf( "Compiler does not define version with __VERSION__\n" );
 #endif
 	printf( "\n" );
 #ifdef __unix__
-	printf( "This compiler system defines __unix__.\n" );
+	printf( "__unix__ defined - " );
 	printf( "This compiler system claims to be a unix based system.\n" );
 #else
 	printf( "This compiler system doesn't define __unix__.\n" );
 #endif
 #ifdef __linux__
-	printf( "This compiler system defines __linux__.\n" );
+	printf( "__linux__ defined - " );
 	printf( "This compiler system claims to be a linux based system.\n" );
 #else
 	printf( "This compiler system doesn't define __linux__.\n" );
