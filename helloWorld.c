@@ -144,26 +144,28 @@ int  main( int  argc, char *  argv[])
 #endif
 	printf( "\n" );
 #ifdef __STDC__
-	printf( "Compiler defines  __STDC__\n" );
+	printf( "__STDC__ defined - " );
 	printf( "Compiler claims conformance to ISO Standard C.\n" );
 #else
 	printf( "Compiler does not claim comformance with ISO Standard C.\n" );
 #endif
 #ifdef __STDC_VERSION__
-	printf( "Compiler defines  __STDC_VERSION__\n" );
+	printf( "__STDC_VERSION__ defined - " );
 	printf( "Compiler claims conformance to ISO Standard C version %ld.\n", __STDC_VERSION__ );
 #else
 	printf( "Compiler does not define ISO Standard C version date.\n" );
 #endif
 #ifdef __STDC_HOSTED__
-	printf( "Compiler defines  __STDC_HOSTED__\n" );
+	printf( "__STDC_HOSTED__ defined - " );
 	printf( "Compiler claims support for entire standard library.\n" );
 #else
 	printf( "Compiler does not claim support for entire standard library.\n" );
 #endif
 #ifdef __GNUC__
-	printf( "Compiler defines  __GNUC__\n" );
+	printf( "__GNUC__ defined as %d - ", __GNUC__ );
 	printf( "Compiled by gnu gcc or compatible compiler\n" );
+	printf( "__GNUC_MINOR__ defined as %d, ", __GNUC_MINOR__ );
+	printf( "__GNUC_PATCHLEVEL__ defined as %d\n", __GNUC_PATCHLEVEL__ );
 #else
 	printf( "Compiler does not claim to be compatible with gnu gcc\n" );
 #endif
