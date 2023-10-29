@@ -144,67 +144,80 @@ int  main( int  argc, char *  argv[])
 #endif
 	printf( "\n" );
 #ifdef __STDC__
+	printf( "Compiler defines  __STDC__\n" );
 	printf( "Compiler claims conformance to ISO Standard C.\n" );
 #else
 	printf( "Compiler does not claim comformance with ISO Standard C.\n" );
 #endif
 #ifdef __STDC_VERSION__
+	printf( "Compiler defines  __STDC_VERSION__\n" );
 	printf( "Compiler claims conformance to ISO Standard C version %ld.\n", __STDC_VERSION__ );
 #else
 	printf( "Compiler does not define ISO Standard C version date.\n" );
 #endif
 #ifdef __STDC_HOSTED__
+	printf( "Compiler defines  __STDC_HOSTED__\n" );
 	printf( "Compiler claims support for entire standard library.\n" );
 #else
 	printf( "Compiler does not claim support for entire standard library.\n" );
 #endif
 #ifdef __GNUC__
+	printf( "Compiler defines  __GNUC__\n" );
 	printf( "Compiled by gnu gcc or compatible compiler\n" );
 #else
 	printf( "Compiler does not claim to be compatible with gnu gcc\n" );
 #endif
 #ifdef __VERSION__
+	printf( "Compiler defines __VERSION__\n" );
 	printf( "Compiler version '%s'\n", __VERSION__ );
 #else
-	printf( "Compiler does not define version with __VERSION__\n", __VERSION__ );
+	printf( "Compiler does not define version with __VERSION__\n" );
 #endif
 	printf( "\n" );
 #ifdef __unix__
+	printf( "This compiler system defines __unix__.\n" );
 	printf( "This compiler system claims to be a unix based system.\n" );
 #else
 	printf( "This compiler system doesn't define __unix__.\n" );
 #endif
 #ifdef __linux__
+	printf( "This compiler system defines __linux__.\n" );
 	printf( "This compiler system claims to be a linux based system.\n" );
 #else
 	printf( "This compiler system doesn't define __linux__.\n" );
 #endif
 #ifdef __APPLE__
+	printf( "__APPLE__ defined - " );
 	printf( "This compiler system claims to be an apple based system.\n" );
 #else
 	printf( "This compiler system doesn't define __APPLE__.\n" );
 #endif
 #ifdef __CYGWIN__
+	printf( "__CYGWIN__ defined - " );
 	printf( "This compiler system claims to be a cygwin based system.\n" );
 #else
 	printf( "This compiler system doesn't define __CYGWIN__.\n" );
 #endif
 #ifdef __OpenBSD__
+	printf( "__OpenBSD__ defined - " );
 	printf( "This compiler system claims to be an OpenBSD based system.\n" );
 #else
 	printf( "This compiler system doesn't define __OpenBSD__.\n" );
 #endif
 #ifdef __FreeBSD__
+	printf( "__FreeBSD__ defined - " );
 	printf( "This compiler system claims to be an FreeBSD based system.\n" );
 #else
 	printf( "This compiler system doesn't define __FreeBSD__.\n" );
 #endif
 #ifdef __MINGW32__
+	printf( "__MINGW32__ defined - " );
 	printf( "This compiler system claims to be a MINGW32 Windows based system.\n" );
 #else
 	printf( "This compiler system doesn't define __MINGW32__.\n" );
 #endif
 #ifdef __MINGW64__
+	printf( "__MINGW64__ defined - " );
 	printf( "This compiler system claims to be a MINGW64 Windows based system.\n" );
 #else
 	printf( "This compiler system doesn't define __MINGW64__.\n" );
