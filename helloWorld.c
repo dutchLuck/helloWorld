@@ -5,7 +5,7 @@
  * Explore aspects of the compiler MACRO definitions
  *  and underlying system capabilties.
  *
- * helloWorld.c last edited on Fri Dec 30 14:21:25 2022 
+ * helloWorld.c last edited on Sat Dec  2 19:30:47 2023 
  *
  */
 
@@ -25,7 +25,8 @@
 #include  <string.h>	/* strdup() */
 #include  <libgen.h>	/* basename() */
 #include  <sys/param.h>	/* Endian macros? */
-#include  <time.h>		/* clock_getres() */
+#include  <time.h>		/* clock_getres() and struct timespec */
+#include  <sys/time.h>	/* struct timeval used by gettimeofday() */
 
 
 int  getClockResolution( clockid_t  clockIdentifier, struct timespec *  resolution )
@@ -236,6 +237,8 @@ int  main( int  argc, char *  argv[])
 #endif
 	printf( "\nThis compiler system has the following resolution timers/clocks; -\n" );
 	printClockResolutions();
+	printf( "The clock_gettime() function uses \"struct timespec\" (%lu bytes) to store nS time.\n", sizeof( struct timespec ));
+	printf( "The gettimeofday() function uses \"struct timeval\" (%lu bytes) to store uS time.\n", sizeof( struct timeval ));
 	
 	return 0;
 }
