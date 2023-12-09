@@ -237,8 +237,12 @@ int  main( int  argc, char *  argv[])
 #endif
 	printf( "\nThis compiler system has the following resolution timers/clocks; -\n" );
 	printClockResolutions();
+#ifdef __MINGW64__
+	printf( "The clock_gettime() function uses \"struct timespec\" (%llu bytes) to store nS time.\n", sizeof( struct timespec ));
+	printf( "The gettimeofday() function uses \"struct timeval\" (%llu bytes) to store uS time.\n", sizeof( struct timeval ));
+#else
 	printf( "The clock_gettime() function uses \"struct timespec\" (%lu bytes) to store nS time.\n", sizeof( struct timespec ));
 	printf( "The gettimeofday() function uses \"struct timeval\" (%lu bytes) to store uS time.\n", sizeof( struct timeval ));
-	
+#endif	
 	return 0;
 }
