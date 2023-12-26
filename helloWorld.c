@@ -42,39 +42,52 @@ long  nsTimeDiff( struct timespec *  tpEarlier, struct timespec *  tpLater )  {
 
 int  printClockTime( clockid_t  clockIdentifier, struct timespec *  nsTime )  {
   int  result;
+  int  clockReadCount = 0;
   struct timespec  ts, ts2;
   char  timeAndDateStr[ 64 ];
   
-  result = clock_gettime( clockIdentifier, &ts2 );
-  if( result != 0 )  {
+  if(( result = clock_gettime( clockIdentifier, &ts2 )) != 0 )  {
     printf( "? clock_gettime() failed as it returned a value of %d ?\n", result );
     perror( "clock_gettime()" );
     return( result );
   }
   else  {
+  /* Look for a time reading change */
     do {
       result = clock_gettime( clockIdentifier, &ts );
     }  while (( result == 0 ) && ( ts.tv_nsec == ts2.tv_nsec ) && ( ts.tv_sec == ts2.tv_sec ));
-    nsTime->tv_nsec = ts2.tv_nsec;
-    nsTime->tv_sec = ts2.tv_sec;
-    if( clockIdentifier == CLOCK_REALTIME )  {
-      ctime_r( (time_t * ) &nsTime->tv_sec, timeAndDateStr );
-      printf( "%ld.%09ld [S] i.e. %s", nsTime->tv_sec, nsTime->tv_nsec, timeAndDateStr );
-    }
-    else  {
-      printf( "%ld.%09ld [S]\n", nsTime->tv_sec, nsTime->tv_nsec );
-    }
     if( result != 0 )  {
-      printf( "? clock_gettime() in a tight loop failed as it returned a value of %d ?\n", result );
+      printf( "? clock_gettime() in loop 1 failed as it returned a value of %d ?\n", result );
       perror( "clock_gettime()" );
       return( result );
     }
     else  {
-      printf( " First time change noticed was %ld.%09ld [S]", ts.tv_sec, ts.tv_nsec );
-      printf( " = Delta of %ld [nS]\n", nsTimeDiff( nsTime, &ts ));
+    /* Look for a second time reading change and count how many reads before we get a change */
+      do {
+        result = clock_gettime( clockIdentifier, &ts2 );
+        clockReadCount += 1;
+      }  while (( result == 0 ) && ( ts.tv_nsec == ts2.tv_nsec ) && ( ts.tv_sec == ts2.tv_sec ));
+      nsTime->tv_nsec = ts.tv_nsec;
+      nsTime->tv_sec = ts.tv_sec;
+      if( clockIdentifier == CLOCK_REALTIME )  {
+        ctime_r( (time_t * ) &nsTime->tv_sec, timeAndDateStr );
+        printf( "%ld.%09ld [S] i.e. %s", nsTime->tv_sec, nsTime->tv_nsec, timeAndDateStr );
+      }
+      else  {
+        printf( "%ld.%09ld [S]\n", nsTime->tv_sec, nsTime->tv_nsec );
+      }
+      if( result != 0 )  {
+        printf( "? clock_gettime() in loop 2 failed as it returned a value of %d ?\n", result );
+        perror( "clock_gettime()" );
+        return( result );
+      }
+      else  {
+        printf( " Time change noticed after %d clock reads. Time stamp was %ld.%09ld [S]", clockReadCount, ts2.tv_sec, ts2.tv_nsec );
+        printf( " = Delta of %ld [nS]\n", nsTimeDiff( nsTime, &ts2 ));
+      }
     }
+    printf( "\n" );
   }
-  printf( "\n" );
   return( 0 );
 }
 
