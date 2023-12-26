@@ -25,21 +25,70 @@
 #include  <string.h>	/* strdup() */
 #include  <libgen.h>	/* basename() */
 #include  <sys/param.h>	/* Endian macros? */
-#include  <time.h>		/* clock_getres() and struct timespec */
+#include  <time.h>		/* clock_gettime() clock_getres() and struct timespec */
 #include  <sys/time.h>	/* struct timeval used by gettimeofday() */
 
+int  isTimespecEqual( struct timespec *  tp1, struct timespec *  tp2 )  {
+  return(( tp2->tv_nsec == tp1->tv_nsec ) && ( tp2->tv_sec == tp1->tv_sec ));
+}
 
-int  getClockResolution( clockid_t  clockIdentifier, struct timespec *  resolution )
-{
-  long  result;
+
+long  nsTimeDiff( struct timespec *  tpEarlier, struct timespec *  tpLater )  {
+  if( tpLater->tv_sec != tpEarlier->tv_sec )  {
+    tpLater->tv_nsec = ( tpLater->tv_sec - tpEarlier->tv_sec ) * 1000000000;
+  }
+  return( tpLater->tv_nsec - tpEarlier->tv_nsec );
+}
+
+int  printClockTime( clockid_t  clockIdentifier, struct timespec *  nsTime )  {
+  int  result;
+  struct timespec  ts, ts2;
+  char  timeAndDateStr[ 64 ];
+  
+  result = clock_gettime( clockIdentifier, &ts2 );
+  if( result != 0 )  {
+    printf( "? clock_gettime() failed as it returned a value of %d ?\n", result );
+    perror( "clock_gettime()" );
+    return( result );
+  }
+  else  {
+    do {
+      result = clock_gettime( clockIdentifier, &ts );
+    }  while (( result == 0 ) && ( ts.tv_nsec == ts2.tv_nsec ) && ( ts.tv_sec == ts2.tv_sec ));
+    nsTime->tv_nsec = ts2.tv_nsec;
+    nsTime->tv_sec = ts2.tv_sec;
+    if( clockIdentifier == CLOCK_REALTIME )  {
+      ctime_r( (time_t * ) &nsTime->tv_sec, timeAndDateStr );
+      printf( "%ld.%09ld [S] i.e. %s", nsTime->tv_sec, nsTime->tv_nsec, timeAndDateStr );
+    }
+    else  {
+      printf( "%ld.%09ld [S]\n", nsTime->tv_sec, nsTime->tv_nsec );
+    }
+    if( result != 0 )  {
+      printf( "? clock_gettime() in a tight loop failed as it returned a value of %d ?\n", result );
+      perror( "clock_gettime()" );
+      return( result );
+    }
+    else  {
+      printf( " First time change noticed was %ld.%09ld [S]", ts.tv_sec, ts.tv_nsec );
+      printf( " = Delta of %ld [nS]\n", nsTimeDiff( nsTime, &ts ));
+    }
+  }
+  printf( "\n" );
+  return( 0 );
+}
+
+
+int  getClockResolution( clockid_t  clockIdentifier, struct timespec *  resolution )  {
+  int  result;
   
   resolution->tv_nsec = (long) 0;	/* Ensure structure is zero'd */
   resolution->tv_sec = (time_t) 0;	/* Ensure structure is zero'd */
   result = clock_getres( clockIdentifier, resolution );
-  if( result != 0L )  {
-    printf( "? clock_getres() failed as it returned a value of %ld ?\n", result );
+  if( result != 0 )  {
+    printf( "? clock_getres() failed as it returned a value of %d ?\n", result );
     perror( "clock_getres()" );
-    return( 1 );
+    return( result );
   }
   else  {
     printf( "%ld [nS] resolution ", resolution->tv_nsec );
@@ -48,64 +97,82 @@ int  getClockResolution( clockid_t  clockIdentifier, struct timespec *  resoluti
 }
 
 
-void  printClockResolutions( void )
-{
+void  printClockResolutions( void )  {
   clockid_t  clockType;
   struct timespec  resolution;
   
   clockType = CLOCK_REALTIME;
   if( getClockResolution( clockType, &resolution ) == 0 )
     printf( "claimed for CLOCK_REALTIME\n" );
+  printf( " CLOCK_REALTIME time is " );
+  printClockTime( clockType, &resolution );
 #ifdef  CLOCK_MONOTONIC
   clockType = CLOCK_MONOTONIC;
   if( getClockResolution( clockType, &resolution ) == 0 )
     printf( "claimed for CLOCK_MONOTONIC\n" );
+  printf( " CLOCK_MONOTONIC time is " );
+  printClockTime( clockType, &resolution );
 #endif
 #ifdef  CLOCK_MONOTONIC_RAW
   clockType = CLOCK_MONOTONIC_RAW;
   if( getClockResolution( clockType, &resolution ) == 0 )
     printf( "claimed for CLOCK_MONOTONIC_RAW\n" );
+  printf( " CLOCK_MONOTONIC_RAW time is " );
+  printClockTime( clockType, &resolution );
 #endif
 #ifdef  CLOCK_MONOTONIC_RAW_APPROX
   clockType = CLOCK_MONOTONIC_RAW_APPROX;
   if( getClockResolution( clockType, &resolution ) == 0 )
     printf( "claimed for CLOCK_MONOTONIC_RAW_APPROX\n" );
+  printf( " CLOCK_MONOTONIC_RAW_APPROX time is " );
+  printClockTime( clockType, &resolution );
 #endif
 #ifdef  CLOCK_UPTIME_RAW
   clockType = CLOCK_UPTIME_RAW;
   if( getClockResolution( clockType, &resolution ) == 0 )
     printf( "claimed for CLOCK_UPTIME_RAW\n" );
+  printf( " CLOCK_UPTIME_RAW time is " );
+  printClockTime( clockType, &resolution );
 #endif
 #ifdef  CLOCK_UPTIME_RAW_APPROX
   clockType = CLOCK_UPTIME_RAW_APPROX;
   if( getClockResolution( clockType, &resolution ) == 0 )
     printf( "claimed for CLOCK_UPTIME_RAW_APPROX\n" );
+  printf( " CLOCK_UPTIME_RAW_APPROX time is " );
+  printClockTime( clockType, &resolution );
 #endif
 #ifdef  CLOCK_PROCESS_CPUTIME_ID
   clockType = CLOCK_PROCESS_CPUTIME_ID;
   if( getClockResolution( clockType, &resolution ) == 0 )
     printf( "claimed for CLOCK_PROCESS_CPUTIME_ID\n" );
+  printf( " CLOCK_PROCESS_CPUTIME_ID time is " );
+  printClockTime( clockType, &resolution );
 #endif
 #ifdef  CLOCK_THREAD_CPUTIME_ID
   clockType = CLOCK_THREAD_CPUTIME_ID;
   if( getClockResolution( clockType, &resolution ) == 0 )
     printf( "claimed for CLOCK_THREAD_CPUTIME_ID\n" );
+  printf( " CLOCK_THREAD_CPUTIME_ID time is " );
+  printClockTime( clockType, &resolution );
 #endif
 #ifdef  CLOCK_REALTIME_HR
   clockType = CLOCK_REALTIME_HR;
   if( getClockResolution( clockType, &resolution ) == 0 )
     printf( "claimed for CLOCK_REALTIME_HR\n" );
+  printf( " CLOCK_REALTIME_HR time is " );
+  printClockTime( clockType, &resolution );
 #endif
 #ifdef  CLOCK_MONOTONIC_HR
   clockType = CLOCK_MONOTONIC_HR;
   if( getClockResolution( clockType, &resolution ) == 0 )
     printf( "claimed for CLOCK_MONOTONIC_HR\n" );
+  printf( " CLOCK_MONOTONIC_HR time is " );
+  printClockTime( clockType, &resolution );
 #endif
 }
 
 
-int  main( int  argc, char *  argv[])
-{
+int  main( int  argc, char *  argv[])  {
 	char *  exePath;
 	char *  name;	/* Name of executable */
 
@@ -235,7 +302,7 @@ int  main( int  argc, char *  argv[])
 #else
 	printf( "This compiler system doesn't define __BYTE_ORDER, at least not in <sys/param.h>\n" );
 #endif
-	printf( "\nThis compiler system has the following resolution timers/clocks; -\n" );
+	printf( "\nThis compiler/system has the following resolution timers/clocks; -\n" );
 	printClockResolutions();
 #ifdef __MINGW64__
 	printf( "The clock_gettime() function uses \"struct timespec\" (%llu bytes) to store nS time.\n", sizeof( struct timespec ));
