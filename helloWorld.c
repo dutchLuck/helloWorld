@@ -5,13 +5,15 @@
  * Explore aspects of the compiler MACRO definitions
  *  and underlying system capabilties.
  *
- * helloWorld.c last edited on Sat Dec  2 19:30:47 2023 
+ * helloWorld.c last edited on Thu Dec 28 19:59:47 2023 
  *
  */
 
 /*
- * Snippet of code to experiment with
- *
+ * Snippet of code to experiment with pre-defined Names
+ #
+ * use -DCLOCKS to compile in clock/timer
+ * investigation code.
  */
 
 /*
@@ -25,6 +27,7 @@
 #include  <string.h>	/* strdup() */
 #include  <libgen.h>	/* basename() */
 #include  <sys/param.h>	/* Endian macros? */
+#ifdef CLOCKS
 #include  <time.h>		/* clock_gettime() clock_getres() and struct timespec */
 #include  <sys/time.h>	/* struct timeval used by gettimeofday() */
 
@@ -52,7 +55,7 @@ int  printClockTime( clockid_t  clockIdentifier, struct timespec *  nsTime )  {
     return( result );
   }
   else  {
-  /* Look for a time reading change */
+  /* Inital clock read was successful so loop looking for a time reading change */
     do {
       result = clock_gettime( clockIdentifier, &ts );
     }  while (( result == 0 ) && ( ts.tv_nsec == ts2.tv_nsec ) && ( ts.tv_sec == ts2.tv_sec ));
@@ -62,11 +65,13 @@ int  printClockTime( clockid_t  clockIdentifier, struct timespec *  nsTime )  {
       return( result );
     }
     else  {
-    /* Look for a second time reading change and count how many reads before we get a change */
+    /* First time reading change was successfully found so look for a second time reading change */
+    /* and count how many reads before we get a change */
       do {
         result = clock_gettime( clockIdentifier, &ts2 );
         clockReadCount += 1;
       }  while (( result == 0 ) && ( ts.tv_nsec == ts2.tv_nsec ) && ( ts.tv_sec == ts2.tv_sec ));
+      /* now that the time critical stuff is done print info about the first time rading change */
       nsTime->tv_nsec = ts.tv_nsec;
       nsTime->tv_sec = ts.tv_sec;
       if( clockIdentifier == CLOCK_REALTIME )  {
@@ -76,6 +81,7 @@ int  printClockTime( clockid_t  clockIdentifier, struct timespec *  nsTime )  {
       else  {
         printf( "%ld.%09ld [S]\n", nsTime->tv_sec, nsTime->tv_nsec );
       }
+      /* if the second time reading change failed then inform user */
       if( result != 0 )  {
         printf( "? clock_gettime() in loop 2 failed as it returned a value of %d ?\n", result );
         perror( "clock_gettime()" );
@@ -183,7 +189,7 @@ void  printClockResolutions( void )  {
   printClockTime( clockType, &resolution );
 #endif
 }
-
+#endif
 
 int  main( int  argc, char *  argv[])  {
 	char *  exePath;
@@ -307,14 +313,15 @@ int  main( int  argc, char *  argv[])  {
 #endif
 #ifdef __BYTE_ORDER__
 	printf( "This compiler system claims to be a " );
-        if( __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__ )  printf( "big" );
-        else if( __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__ )  printf( "little" );
-        else if( __BYTE_ORDER__ == __ORDER_PDP_ENDIAN__ )  printf( "little (word swapped)" );
-        else printf( "unknown" );
-        printf( " endian based system.\n" );
+  if( __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__ )  printf( "big" );
+  else if( __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__ )  printf( "little" );
+  else if( __BYTE_ORDER__ == __ORDER_PDP_ENDIAN__ )  printf( "little (word swapped)" );
+  else printf( "unknown" );
+  printf( " endian based system.\n" );
 #else
 	printf( "This compiler system doesn't define __BYTE_ORDER, at least not in <sys/param.h>\n" );
 #endif
+#ifdef CLOCKS
 	printf( "\nThis compiler/system has the following resolution timers/clocks; -\n" );
 	printClockResolutions();
 #ifdef __MINGW64__
@@ -324,5 +331,6 @@ int  main( int  argc, char *  argv[])  {
 	printf( "The clock_gettime() function uses \"struct timespec\" (%lu bytes) to store nS time.\n", sizeof( struct timespec ));
 	printf( "The gettimeofday() function uses \"struct timeval\" (%lu bytes) to store uS time.\n", sizeof( struct timeval ));
 #endif	
+#endif
 	return 0;
 }

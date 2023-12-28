@@ -163,3 +163,66 @@ This compiler system doesn't define __OpenBSD__.
 This compiler system doesn't define __MINGW32__.
 This compiler system doesn't define __MINGW64__.
 
+Wed 27 Dec 2023 15:46:37 AEDT
+MacOS Sonoma
+============
+
+Hello World, courtesy of 'helloWorld'
+
+'helloWorld' compiled from 'helloWorld.c', on Dec 26 2023 at 20:34:50
+Now executing line 219 in function 'main'
+Source File 'helloWorld.c' last Modified on Tue Dec 26 20:34:44 2023
+
+__STDC__ defined - Compiler claims conformance to ISO Standard C.
+__STDC_VERSION__ defined - Compiler claims conformance to ISO Standard C version 201710.
+__STDC_HOSTED__ defined - Compiler claims support for entire standard library.
+__GNUC__ defined as 4 - Compiled by gnu gcc or compatible compiler
+__GNUC_MINOR__ defined as 2, __GNUC_PATCHLEVEL__ defined as 1
+__VERSION__ defined - Compiler version 'Apple LLVM 15.0.0 (clang-1500.1.0.2.5)'
+
+This compiler system doesn't define __unix__.
+This compiler system doesn't define __linux__.
+__APPLE__ defined - This compiler system claims to be an apple based system.
+This compiler system doesn't define __CYGWIN__.
+This compiler system doesn't define __OpenBSD__.
+This compiler system doesn't define __FreeBSD__.
+This compiler system doesn't define __MINGW32__.
+This compiler system doesn't define __MINGW64__.
+This compiler system claims to be a little endian based system.
+
+This compiler/system has the following resolution timers/clocks; -
+1000 [nS] resolution claimed for CLOCK_REALTIME
+ CLOCK_REALTIME time is 1703652409.978983000 [S] i.e. Wed Dec 27 15:46:49 2023
+ Time change noticed after 15 clock reads. Time stamp was 1703652409.978984000 [S] = Delta of 1000 [nS]
+
+1000 [nS] resolution claimed for CLOCK_MONOTONIC
+ CLOCK_MONOTONIC time is 68620.155678000 [S]
+ Time change noticed after 16 clock reads. Time stamp was 68620.155679000 [S] = Delta of 1000 [nS]
+
+42 [nS] resolution claimed for CLOCK_MONOTONIC_RAW
+ CLOCK_MONOTONIC_RAW time is 68625.075005666 [S]
+ Time change noticed after 1 clock reads. Time stamp was 68625.075005750 [S] = Delta of 84 [nS]
+
+42 [nS] resolution claimed for CLOCK_MONOTONIC_RAW_APPROX
+ CLOCK_MONOTONIC_RAW_APPROX time is 68625.075459916 [S]
+ Time change noticed after 271 clock reads. Time stamp was 68625.075465708 [S] = Delta of 5792 [nS]
+
+42 [nS] resolution claimed for CLOCK_UPTIME_RAW
+ CLOCK_UPTIME_RAW time is 12058.324433708 [S]
+ Time change noticed after 1 clock reads. Time stamp was 12058.324433791 [S] = Delta of 83 [nS]
+
+42 [nS] resolution claimed for CLOCK_UPTIME_RAW_APPROX
+ CLOCK_UPTIME_RAW_APPROX time is 12058.324441666 [S]
+ Time change noticed after 231 clock reads. Time stamp was 12058.324446041 [S] = Delta of 4375 [nS]
+
+1000 [nS] resolution claimed for CLOCK_PROCESS_CPUTIME_ID
+ CLOCK_PROCESS_CPUTIME_ID time is 0.005313000 [S]
+ Time change noticed after 2 clock reads. Time stamp was 0.005314000 [S] = Delta of 1000 [nS]
+
+42 [nS] resolution claimed for CLOCK_THREAD_CPUTIME_ID
+ CLOCK_THREAD_CPUTIME_ID time is 0.005319041 [S]
+ Time change noticed after 1 clock reads. Time stamp was 0.005319500 [S] = Delta of 459 [nS]
+
+The clock_gettime() function uses "struct timespec" (16 bytes) to store nS time.
+The gettimeofday() function uses "struct timeval" (16 bytes) to store uS time.
+
