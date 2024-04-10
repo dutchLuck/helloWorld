@@ -8,7 +8,8 @@ NAME=helloWorld
 #
 OP_FILE_NAME=Makefile
 COMPILER=cc
-OPTIONS=-Wall
+OPTIONS="-Wall -pedantic"
+LNK_OPTIONS=""
 TRGT=$NAME
 SRC=$NAME.c
 #
@@ -37,4 +38,7 @@ echo "clean:" >> $OP_FILE_NAME
 echo -e "\trm -f $TRGT $NAME.o" >> $OP_FILE_NAME
 echo "" >> $OP_FILE_NAME
 #
-
+echo "valgrind: clean" >> $OP_FILE_NAME
+echo -e "\t$COMPILER $OPTIONS -DCLOCKS -g -o $TRGT $SRC $LNK_OPTIONS" >> $OP_FILE_NAME
+echo "" >> $OP_FILE_NAME
+#
