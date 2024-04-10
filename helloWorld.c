@@ -5,7 +5,7 @@
  * Explore aspects of the compiler MACRO definitions
  *  and underlying system capabilties.
  *
- * helloWorld.c last edited on Thu Dec 28 19:59:47 2023 
+ * helloWorld.c last edited on Wed Apr 10 22:56:13 2024 
  *
  */
 
@@ -23,7 +23,8 @@
  */
 
 
-#include  <stdio.h>	/* printf(), perror() */
+#include  <stdio.h>   /* printf(), perror() */
+#include  <stdlib.h>  /* free() */
 #include  <string.h>	/* strdup() */
 #include  <libgen.h>	/* basename() */
 #include  <sys/param.h>	/* Endian macros? */
@@ -332,5 +333,6 @@ int  main( int  argc, char *  argv[])  {
 	printf( "The gettimeofday() function uses \"struct timeval\" (%lu bytes) to store uS time.\n", sizeof( struct timeval ));
 #endif	
 #endif
+  if( exePath != NULL )  free( exePath );
 	return 0;
 }
