@@ -28,6 +28,7 @@
 #include  <string.h>	/* strdup() */
 #include  <libgen.h>	/* basename() */
 #include  <sys/param.h>	/* Endian macros? */
+#include  <limits.h>    /* MIN and MAX size of number types */
 #ifdef CLOCKS
 #include  <time.h>		/* clock_gettime() clock_getres() and struct timespec */
 #include  <sys/time.h>	/* struct timeval used by gettimeofday() */
@@ -321,6 +322,48 @@ int  main( int  argc, char *  argv[])  {
   printf( " endian based system.\n" );
 #else
 	printf( "This compiler system doesn't define __BYTE_ORDER, at least not in <sys/param.h>\n" );
+#endif
+#ifdef CHAR_BIT
+  printf("The number of bits in a byte (\"CHAR_BIT\") is %d\n", CHAR_BIT);
+#endif
+#ifdef CHAR_MIN
+  printf("The most negetive value of char (\"CHAR_MIN\") is %d\n", CHAR_MIN);
+#endif
+#ifdef CHAR_MAX
+  printf("The most positive value of char (\"CHAR_MAX\") is %d\n", CHAR_MAX);
+#endif
+#ifdef UCHAR_MAX
+  printf("The maximum value of unsigned char (\"UCHAR_MAX\") is %d\n", UCHAR_MAX);
+#endif
+#ifdef SHRT_MIN 
+  printf("The most negetive value of short int (\"SHRT_MIN\") is %d\n", SHRT_MIN);
+#endif
+#ifdef SHRT_MAX 
+  printf("The most positive value of short int (\"SHRT_MAX\") is %d\n", SHRT_MAX);
+#endif
+#ifdef USHRT_MAX 
+  printf("The maximum value of unsigned short int (\"USHRT_MAX\") is %u\n", USHRT_MAX);
+#endif
+#ifdef INT_MIN 
+  printf("The most negetive value of int (\"INT_MIN\") is %d\n", INT_MIN);
+#endif
+#ifdef INT_MAX 
+  printf("The most positive value of int (\"INT_MAX\") is %d\n", INT_MAX);
+#endif
+#ifdef UINT_MAX 
+  printf("The maximum value of unsigned int (\"UINT_MAX\") is %u\n", UINT_MAX);
+#endif
+#ifdef LONG_MIN 
+  printf("The most negetive value of long int (\"LONG_MIN\") is %ld\n", LONG_MIN);
+#endif
+#ifdef LONG_MAX 
+  printf("The most positive value of long int (\"LONG_MAX\") is %ld\n", LONG_MAX);
+#endif
+#ifdef ULONG_MAX 
+  printf("The maximum value of unsigned long int (\"ULONG_MAX\") is %lu\n", ULONG_MAX);
+#endif
+#ifdef RAND_MAX 
+  printf("The maximum value produced by rand() (\"RAND_MAX\") is %d\n", RAND_MAX);
 #endif
 #ifdef CLOCKS
 	printf( "\nThis compiler/system has the following resolution timers/clocks; -\n" );
