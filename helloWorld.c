@@ -5,7 +5,7 @@
  * Explore aspects of the compiler MACRO definitions
  *  and underlying system capabilties.
  *
- * helloWorld.c last edited on Wed Apr 10 22:56:13 2024 
+ * helloWorld.c last edited on Mon Dec  9 23:07:59 2024 
  *
  */
 
@@ -226,7 +226,7 @@ int  main( int  argc, char *  argv[])  {
 #ifdef __LINE__
 	printf( "Now executing line %d in function '%s'\n", __LINE__, __func__ );
 #else
-	printf( "Unable to specify this line that is being executed\n" );
+	printf( "Unable to specify this line that is being executed (i.e. __LINE__ isn't defined).\n" );
 #endif
 #ifdef __TIMESTAMP__
 	printf( "Source File '%s' last Modified on %s\n", __FILE__, __TIMESTAMP__ );
@@ -236,19 +236,19 @@ int  main( int  argc, char *  argv[])  {
 	printf( "__STDC__ defined - " );
 	printf( "Compiler claims conformance to ISO Standard C.\n" );
 #else
-	printf( "Compiler does not claim comformance with ISO Standard C.\n" );
+	printf( "Compiler does not claim comformance with ISO Standard C (i.e. __STDC__ isn't defined).\n" );
 #endif
 #ifdef __STDC_VERSION__
 	printf( "__STDC_VERSION__ defined - " );
 	printf( "Compiler claims conformance to ISO Standard C version %ld.\n", __STDC_VERSION__ );
 #else
-	printf( "Compiler does not define ISO Standard C version date.\n" );
+	printf( "Compiler does not define ISO Standard C version date (i.e. __STDC_VERSION__ isn't defined).\n" );
 #endif
 #ifdef __STDC_HOSTED__
 	printf( "__STDC_HOSTED__ defined - " );
 	printf( "Compiler claims support for entire standard library.\n" );
 #else
-	printf( "Compiler does not claim support for entire standard library.\n" );
+	printf( "Compiler does not claim support for entire standard library (i.e. __STDC_HOSTED__ isn't defined).\n" );
 #endif
 #ifdef __GNUC__
 	printf( "__GNUC__ defined as %d - ", __GNUC__ );
@@ -256,7 +256,7 @@ int  main( int  argc, char *  argv[])  {
 	printf( "__GNUC_MINOR__ defined as %d, ", __GNUC_MINOR__ );
 	printf( "__GNUC_PATCHLEVEL__ defined as %d\n", __GNUC_PATCHLEVEL__ );
 #else
-	printf( "Compiler does not claim to be compatible with gnu gcc\n" );
+	printf( "Compiler does not claim to be compatible with gnu gcc (i.e. __GNUC__ isn't defined).\n" );
 #endif
 #ifdef __VERSION__
 	printf( "__VERSION__ defined - " );
