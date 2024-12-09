@@ -15,7 +15,7 @@ and timers provided by the compiler in combination
 with the operating system.
 
 Sample output from helloWorld on MacOS Sequoia 15.1.1 with -DCLOCKS used; -
-'''
+```
 
 Hello World, courtesy of 'helloWorld'
 
@@ -89,4 +89,4 @@ This compiler/system has the following resolution timers/clocks; -
 
 The clock_gettime() function uses "struct timespec" (16 bytes) to store nS time.
 The gettimeofday() function uses "struct timeval" (16 bytes) to store uS time.
-'''
+```
