@@ -2,7 +2,7 @@
 #
 # C O N F I G U R E
 #
-# configure last edited on Thu Dec 28 19:57:07 2023 
+# configure last edited on Tue Dec 10 21:13:34 2024 
 #
 NAME=helloWorld
 #
@@ -20,14 +20,15 @@ if [[ "$OSTYPE" == "cygwin" ]] ; then
 elif [[ "$OSTYPE" == "msys" ]] ; then
   TRGT=$NAME.exe
   COMPILER=gcc
+  LNK_OPTIONS="-static"
 fi
 #
 echo "$TRGT: $SRC" > $OP_FILE_NAME
-echo -e "\t$COMPILER $OPTIONS -UCLOCKS -o $TRGT $SRC" >> $OP_FILE_NAME
+echo -e "\t$COMPILER $OPTIONS -UCLOCKS -o $TRGT $SRC $LNK_OPTIONS" >> $OP_FILE_NAME
 echo "" >> $OP_FILE_NAME
 #
 echo "clocks: $SRC" >> $OP_FILE_NAME
-echo -e "\t$COMPILER $OPTIONS -DCLOCKS -o $TRGT $SRC" >> $OP_FILE_NAME
+echo -e "\t$COMPILER $OPTIONS -DCLOCKS -o $TRGT $SRC $LNK_OPTIONS" >> $OP_FILE_NAME
 echo "" >> $OP_FILE_NAME
 #
 echo "check: $TRGT" >> $OP_FILE_NAME
@@ -38,7 +39,7 @@ echo "clean:" >> $OP_FILE_NAME
 echo -e "\trm -f $TRGT $NAME.o" >> $OP_FILE_NAME
 echo "" >> $OP_FILE_NAME
 #
-echo "valgrind: clean" >> $OP_FILE_NAME
-echo -e "\t$COMPILER $OPTIONS -DCLOCKS -g -o $TRGT $SRC $LNK_OPTIONS" >> $OP_FILE_NAME
+echo "debug: clean" >> $OP_FILE_NAME
+echo -e "\t$COMPILER $OPTIONS -DDEBUG -DCLOCKS -g -o $TRGT $SRC $LNK_OPTIONS" >> $OP_FILE_NAME
 echo "" >> $OP_FILE_NAME
 #

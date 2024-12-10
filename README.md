@@ -1,20 +1,61 @@
 # helloWorld
-This code started out as Git newbie test drive code;
-I have used RCS as a version control method, but it appears git is
+C language code to output "hello, world" has been around a long time,
+and was used as the example code in Chapter 1.1 Getting Started in
+the 1978 book "The C Programming Language" by Kernighan and Ritchie.
+In that chapter they state "The first program to write is the same
+for all languages: Print the words  hello, world". Even if exceptions
+are found to this statement the hello world program has proved a
+popular thing in programming for over four decades. It is sometimes
+used as a check that a new compiler/interepreter and/or associated
+software environment has been correctly installed and is able to
+produce the expected results. Indeed the Rust language automatically
+generates a hello world program in the first stage of setting up the
+development environment for a new program.
+
+This helloWorld code was adapted from a predecessor, that used a few
+predefined compiler macros to enhance the hello world output, so as
+to become a Git newbie test drive program.
+I have used RCS as a version control method, but it appears Git is
 the present and at least the near future. I have also used this
-code to try out git's Actions to see what advantages the git provided
-tools may have, even though this code is rather trivial.
+code to try out Github's "Actions" to see what advantages the Github
+provided tools may have, even though this code is rather trivial
+to be a Github Project.
 
 This code has been expanded a number of times to test out
-aspects of compiler configuration or operation. For example
-it outputs a list of Pre-defined values known by the c compiler.
+aspects of C compiler configuration or operation. For example
+it outputs a list of Pre-defined values known by the compiler.
 
 If this code is compiled with a -DCLOCKS options 
 the code will output the resolution of various clocks
-and timers provided by the compiler in combination
+and timers provided by the compiler system in combination
 with the operating system.
 
-Sample output from helloWorld on MacOS Sequoia 15.1.1 with -DCLOCKS used; -
+At the most rudimentary level of having a working C compiler
+on a UNIX or linux like system this code can be compiled from
+the command line with; -
+```
+cc -o helloWorld helloWorld.c
+```
+OR
+```
+cc -DCLOCKS -o helloWorld helloWorld.c
+```
+and run by typing; -
+```
+./helloWorld
+```
+If the user environment has git, make and bash in addition to
+the cc compiler, then helloWorld on this Github can be cloned
+and run in the users environment with the folowing recipe; -
+```
+git clone https://github.com/dutchLuck/helloWorld
+cd helloWorld
+./configure
+make
+make check
+```
+An example of the output from helloWorld on MacOS Sequoia 15.1.1
+when compiled with the -DCLOCKS option, is; -
 ```
 
 Hello World, courtesy of 'helloWorld'
