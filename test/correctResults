@@ -1,0 +1,11 @@
+
+++++++++++ helloWorld   +++Default no options check++++++++++
+Hello World!
+++++++++++ Shell got Return code number 0 for no options check++++++++++
+
+++++++++++ helloWorld -v -b1 -a1 +++Before, after and verbose options check++++++++++
+helloWorld version 0v9
+
+Hello World, courtesy of 'helloWorld'
+
+++++++++++ Shell got Return code number 0 for before, after and verbose options check++++++++++

@@ -5,20 +5,22 @@
  * Explore aspects of the compiler MACRO definitions
  *  and underlying system capabilties.
  *
- * helloWorld.c last edited on Mon Dec  9 23:07:59 2024 
+ * helloWorld.c last edited on Wed Mar  5 16:23:14 2025 
  *
  */
 
 /*
- * Snippet of code to experiment with pre-defined Names
- #
- * use -DCLOCKS to compile in clock/timer
- * investigation code.
+ * Code to get details on which pre-defined Names the
+ * c compiler recognizes. This code can also output info
+ * about size of number types and clock/timer resolution.
+ * Usage information can be obtained with the -h option.
+ * E.g.   ./helloWorld -h
+ * 
  */
 
 /*
  * cpp -dM can provide a list Predefined Macros
- * recognized by the (gnu) compiler
+ * recognized by the (gnu) c language compiler
  *
  */
 
@@ -29,9 +31,251 @@
 #include  <libgen.h>	/* basename() */
 #include  <sys/param.h>	/* Endian macros? */
 #include  <limits.h>    /* MIN and MAX size of number types */
+#include  "config.h"    /* init Configuration */
 #ifdef CLOCKS
 #include  <time.h>		/* clock_gettime() clock_getres() and struct timespec */
 #include  <sys/time.h>	/* struct timeval used by gettimeofday() */
+#endif
+
+#define VERSION_INFO "0v9"
+
+#ifdef CLOCKS
+void  printClockResolutions( void );
+#endif
+void  setExecutableName( char *  argv[] );
+void  cleanupStorage( void );
+
+
+char *  exePath = NULL;
+char *  exeName = NULL;
+
+
+int  main( int  argc, char *  argv[])  {
+  struct config  config;
+  int  indexToFirstNonConfig;
+  int  index;
+
+	/* Ensure any allocated memory is free'd */
+	atexit( cleanupStorage );
+  /* setup the name of this program */
+  setExecutableName( argv );
+  /* set defaults for all configuration options */
+  initConfiguration( &config );
+  /* set any configuration options that have been specified in the command line */
+  indexToFirstNonConfig = setConfiguration( argc, argv, &config );
+  if ( config.D.active )  {
+    configuration_status( &config);
+    for ( index = indexToFirstNonConfig; index < argc; index++)
+      printf ( "Debug: Non-option argument ( %d ): \"%s\"\n", index, argv[index]);
+  }
+  /* if -V, -v or -D then show version information */
+  if ( config.V.active || config.v.active || config.D.active )
+    printf( "%s version %s\n", exeName, VERSION_INFO );
+  if ( config.h.active )  usage( &config, exeName );
+
+  for ( index = ( config.b.active ) ? config.b.optionInt : config.b.defaultVal; index > 0; --index )  printf( "\n" );
+	printf( "Hello World" );
+  if( config.v.active )  printf( ", courtesy of '%s'\n", exeName );
+  else  printf( "!\n" );
+  for ( index = ( int )(( config.a.active ) ? config.a.optionLng : config.a.defaultVal); index > 0; --index )  printf( "\n" );
+  if ( config.m.active )  printf( "%s\n", config.m.optionStr );
+  
+  if ( config.c.active )  {
+#ifdef __FILE__
+  	printf( "'%s' compiled from '%s', ", exeName, __FILE__ );
+#else
+	  printf( "'%s' compiled from an unspecified source file, ", name );
+#endif
+#ifdef __DATE__
+  	printf( "on %s ", __DATE__ );
+#else
+	  printf( "on an unspecified date " );
+#endif
+#ifdef __TIME__
+  	printf( "at %s\n", __TIME__ );
+#else
+	  printf( "at an unspecified time\n" );
+#endif
+#ifdef __LINE__
+  	printf( "Now executing line %d in function '%s'\n", __LINE__, __func__ );
+#else
+	  printf( "Unable to specify this line that is being executed (i.e. __LINE__ isn't defined).\n" );
+#endif
+#ifdef __TIMESTAMP__
+  	printf( "Source File '%s' last Modified on %s\n", __FILE__, __TIMESTAMP__ );
+#endif
+	  printf( "\n" );
+#ifdef __STDC__
+  	printf( "__STDC__ defined - " );
+	  printf( "Compiler claims conformance to ISO Standard C.\n" );
+#else
+  	printf( "Compiler does not claim comformance with ISO Standard C (i.e. __STDC__ isn't defined).\n" );
+#endif
+#ifdef __STDC_VERSION__
+  	printf( "__STDC_VERSION__ defined - " );
+	  printf( "Compiler claims conformance to ISO Standard C version %ld.\n", __STDC_VERSION__ );
+#else
+  	printf( "Compiler does not define ISO Standard C version date (i.e. __STDC_VERSION__ isn't defined).\n" );
+#endif
+#ifdef __STDC_HOSTED__
+  	printf( "__STDC_HOSTED__ defined - " );
+	  printf( "Compiler claims support for entire standard library.\n" );
+#else
+  	printf( "Compiler does not claim support for entire standard library (i.e. __STDC_HOSTED__ isn't defined).\n" );
+#endif
+#ifdef __GNUC__
+  	printf( "__GNUC__ defined as %d - ", __GNUC__ );
+	  printf( "Compiled by gnu gcc or compatible compiler\n" );
+  	printf( "__GNUC_MINOR__ defined as %d, ", __GNUC_MINOR__ );
+	  printf( "__GNUC_PATCHLEVEL__ defined as %d\n", __GNUC_PATCHLEVEL__ );
+#else
+  	printf( "Compiler does not claim to be compatible with gnu gcc (i.e. __GNUC__ isn't defined).\n" );
+#endif
+#ifdef __VERSION__
+	  printf( "__VERSION__ defined - " );
+  	printf( "Compiler version '%s'\n", __VERSION__ );
+#else
+	  printf( "Compiler does not define version with __VERSION__\n" );
+#endif
+  	printf( "\n" );
+#ifdef __unix__
+  	printf( "__unix__ defined - " );
+	  printf( "This compiler system claims to be a unix based system.\n" );
+#else
+  	printf( "This compiler system doesn't define __unix__.\n" );
+#endif
+#ifdef __linux__
+	  printf( "__linux__ defined - " );
+  	printf( "This compiler system claims to be a linux based system.\n" );
+#else
+	  printf( "This compiler system doesn't define __linux__.\n" );
+#endif
+#ifdef __APPLE__
+  	printf( "__APPLE__ defined - " );
+	  printf( "This compiler system claims to be an apple based system.\n" );
+#else
+  	printf( "This compiler system doesn't define __APPLE__.\n" );
+#endif
+#ifdef __CYGWIN__
+	  printf( "__CYGWIN__ defined - " );
+  	printf( "This compiler system claims to be a cygwin based system.\n" );
+#else
+	  printf( "This compiler system doesn't define __CYGWIN__.\n" );
+#endif
+#ifdef __OpenBSD__
+  	printf( "__OpenBSD__ defined - " );
+	  printf( "This compiler system claims to be an OpenBSD based system.\n" );
+#else
+  	printf( "This compiler system doesn't define __OpenBSD__.\n" );
+#endif
+#ifdef __FreeBSD__
+  	printf( "__FreeBSD__ defined - " );
+	  printf( "This compiler system claims to be an FreeBSD based system.\n" );
+#else
+  	printf( "This compiler system doesn't define __FreeBSD__.\n" );
+#endif
+#ifdef __MINGW32__
+  	printf( "__MINGW32__ defined - " );
+	  printf( "This compiler system claims to be a MINGW32 Windows based system.\n" );
+#else
+  	printf( "This compiler system doesn't define __MINGW32__.\n" );
+#endif
+#ifdef __MINGW64__
+	  printf( "__MINGW64__ defined - " );
+  	printf( "This compiler system claims to be a MINGW64 Windows based system.\n" );
+#else
+	  printf( "This compiler system doesn't define __MINGW64__.\n" );
+#endif
+  }
+
+  if ( config.N.active )  {
+#ifdef __BYTE_ORDER__
+	  printf( "This compiler system claims to be a " );
+    if( __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__ )  printf( "big" );
+    else if( __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__ )  printf( "little" );
+    else if( __BYTE_ORDER__ == __ORDER_PDP_ENDIAN__ )  printf( "little (word swapped)" );
+    else printf( "unknown" );
+    printf( " endian based system.\n" );
+#else
+	  printf( "This compiler system doesn't define __BYTE_ORDER, at least not in <sys/param.h>\n" );
+#endif
+#ifdef CHAR_BIT
+    printf("The number of bits in a byte (\"CHAR_BIT\") is %d\n", CHAR_BIT);
+#endif
+#ifdef CHAR_MIN
+    printf("The most negetive value of char (\"CHAR_MIN\") is %d\n", CHAR_MIN);
+#endif
+#ifdef CHAR_MAX
+    printf("The most positive value of char (\"CHAR_MAX\") is %d\n", CHAR_MAX);
+#endif
+#ifdef UCHAR_MAX
+    printf("The maximum value of unsigned char (\"UCHAR_MAX\") is %d\n", UCHAR_MAX);
+#endif
+#ifdef SHRT_MIN 
+    printf("The most negetive value of short int (\"SHRT_MIN\") is %d\n", SHRT_MIN);
+#endif
+#ifdef SHRT_MAX 
+    printf("The most positive value of short int (\"SHRT_MAX\") is %d\n", SHRT_MAX);
+#endif
+#ifdef USHRT_MAX 
+    printf("The maximum value of unsigned short int (\"USHRT_MAX\") is %u\n", USHRT_MAX);
+#endif
+#ifdef INT_MIN 
+    printf("The most negetive value of int (\"INT_MIN\") is %d\n", INT_MIN);
+#endif
+#ifdef INT_MAX 
+    printf("The most positive value of int (\"INT_MAX\") is %d\n", INT_MAX);
+#endif
+#ifdef UINT_MAX 
+    printf("The maximum value of unsigned int (\"UINT_MAX\") is %u\n", UINT_MAX);
+#endif
+#ifdef LONG_MIN 
+    printf("The most negetive value of long int (\"LONG_MIN\") is %ld\n", LONG_MIN);
+#endif
+#ifdef LONG_MAX 
+    printf("The most positive value of long int (\"LONG_MAX\") is %ld\n", LONG_MAX);
+#endif
+#ifdef ULONG_MAX 
+    printf("The maximum value of unsigned long int (\"ULONG_MAX\") is %lu\n", ULONG_MAX);
+#endif
+#ifdef RAND_MAX 
+    printf("The maximum value produced by rand() (\"RAND_MAX\") is %d\n", RAND_MAX);
+#endif
+  }
+#ifdef CLOCKS
+  if ( config.C.active )  {
+	  printf( "\nThis compiler/system has the following resolution timers/clocks; -\n" );
+  	printClockResolutions();
+#ifdef __MINGW64__
+	  printf( "The clock_gettime() function uses \"struct timespec\" (%llu bytes) to store nS time.\n", sizeof( struct timespec ));
+  	printf( "The gettimeofday() function uses \"struct timeval\" (%llu bytes) to store uS time.\n", sizeof( struct timeval ));
+#else
+  	printf( "The clock_gettime() function uses \"struct timespec\" (%lu bytes) to store nS time.\n", sizeof( struct timespec ));
+	  printf( "The gettimeofday() function uses \"struct timeval\" (%lu bytes) to store uS time.\n", sizeof( struct timeval ));
+#endif
+  }
+#endif
+	return 0;
+}
+
+
+void  setExecutableName( char *  argv[] ) {
+/* Isolate the name of the executable */
+  if(( exePath = strdup( argv[0] )) == NULL )
+    perror( "Warning: Unable to create duplicate of path to this executable" );
+  else if(( exeName = basename( exePath )) == NULL )  {
+    perror( "Warning: Unable to obtain the name of this executable" );
+  }
+  if ( exeName == NULL )  exeName = argv[ 0 ];
+}
+
+
+void  cleanupStorage( void )  {
+	if( exePath != NULL )  free(( void *) exePath );
+}
+
+
+#ifdef CLOCKS
 
 int  isTimespecEqual( struct timespec *  tp1, struct timespec *  tp2 )  {
   return(( tp2->tv_nsec == tp1->tv_nsec ) && ( tp2->tv_sec == tp1->tv_sec ));
@@ -192,190 +436,3 @@ void  printClockResolutions( void )  {
 #endif
 }
 #endif
-
-int  main( int  argc, char *  argv[])  {
-	char *  exePath;
-	char *  name;	/* Name of executable */
-
-	name = argv[0];	/* default to using argv for executable name */
-	if(( exePath = strdup( argv[0] )) == NULL )  {
-		perror( "?? Unable to duplicate path to this executable" );
-	}
-	else if(( name = basename( exePath )) == NULL )  {
-		perror( "?? Unable to obtain the name of this executable" );
-		name = argv[0];
-	}
-	printf( "\nHello World, courtesy of '%s'\n\n", name );
-
-#ifdef __FILE__
-	printf( "'%s' compiled from '%s', ", name, __FILE__ );
-#else
-	printf( "'%s' compiled from an unspecified source file, ", name );
-#endif
-#ifdef __DATE__
-	printf( "on %s ", __DATE__ );
-#else
-	printf( "on an unspecified date " );
-#endif
-#ifdef __TIME__
-	printf( "at %s\n", __TIME__ );
-#else
-	printf( "at an unspecified time\n" );
-#endif
-
-#ifdef __LINE__
-	printf( "Now executing line %d in function '%s'\n", __LINE__, __func__ );
-#else
-	printf( "Unable to specify this line that is being executed (i.e. __LINE__ isn't defined).\n" );
-#endif
-#ifdef __TIMESTAMP__
-	printf( "Source File '%s' last Modified on %s\n", __FILE__, __TIMESTAMP__ );
-#endif
-	printf( "\n" );
-#ifdef __STDC__
-	printf( "__STDC__ defined - " );
-	printf( "Compiler claims conformance to ISO Standard C.\n" );
-#else
-	printf( "Compiler does not claim comformance with ISO Standard C (i.e. __STDC__ isn't defined).\n" );
-#endif
-#ifdef __STDC_VERSION__
-	printf( "__STDC_VERSION__ defined - " );
-	printf( "Compiler claims conformance to ISO Standard C version %ld.\n", __STDC_VERSION__ );
-#else
-	printf( "Compiler does not define ISO Standard C version date (i.e. __STDC_VERSION__ isn't defined).\n" );
-#endif
-#ifdef __STDC_HOSTED__
-	printf( "__STDC_HOSTED__ defined - " );
-	printf( "Compiler claims support for entire standard library.\n" );
-#else
-	printf( "Compiler does not claim support for entire standard library (i.e. __STDC_HOSTED__ isn't defined).\n" );
-#endif
-#ifdef __GNUC__
-	printf( "__GNUC__ defined as %d - ", __GNUC__ );
-	printf( "Compiled by gnu gcc or compatible compiler\n" );
-	printf( "__GNUC_MINOR__ defined as %d, ", __GNUC_MINOR__ );
-	printf( "__GNUC_PATCHLEVEL__ defined as %d\n", __GNUC_PATCHLEVEL__ );
-#else
-	printf( "Compiler does not claim to be compatible with gnu gcc (i.e. __GNUC__ isn't defined).\n" );
-#endif
-#ifdef __VERSION__
-	printf( "__VERSION__ defined - " );
-	printf( "Compiler version '%s'\n", __VERSION__ );
-#else
-	printf( "Compiler does not define version with __VERSION__\n" );
-#endif
-	printf( "\n" );
-#ifdef __unix__
-	printf( "__unix__ defined - " );
-	printf( "This compiler system claims to be a unix based system.\n" );
-#else
-	printf( "This compiler system doesn't define __unix__.\n" );
-#endif
-#ifdef __linux__
-	printf( "__linux__ defined - " );
-	printf( "This compiler system claims to be a linux based system.\n" );
-#else
-	printf( "This compiler system doesn't define __linux__.\n" );
-#endif
-#ifdef __APPLE__
-	printf( "__APPLE__ defined - " );
-	printf( "This compiler system claims to be an apple based system.\n" );
-#else
-	printf( "This compiler system doesn't define __APPLE__.\n" );
-#endif
-#ifdef __CYGWIN__
-	printf( "__CYGWIN__ defined - " );
-	printf( "This compiler system claims to be a cygwin based system.\n" );
-#else
-	printf( "This compiler system doesn't define __CYGWIN__.\n" );
-#endif
-#ifdef __OpenBSD__
-	printf( "__OpenBSD__ defined - " );
-	printf( "This compiler system claims to be an OpenBSD based system.\n" );
-#else
-	printf( "This compiler system doesn't define __OpenBSD__.\n" );
-#endif
-#ifdef __FreeBSD__
-	printf( "__FreeBSD__ defined - " );
-	printf( "This compiler system claims to be an FreeBSD based system.\n" );
-#else
-	printf( "This compiler system doesn't define __FreeBSD__.\n" );
-#endif
-#ifdef __MINGW32__
-	printf( "__MINGW32__ defined - " );
-	printf( "This compiler system claims to be a MINGW32 Windows based system.\n" );
-#else
-	printf( "This compiler system doesn't define __MINGW32__.\n" );
-#endif
-#ifdef __MINGW64__
-	printf( "__MINGW64__ defined - " );
-	printf( "This compiler system claims to be a MINGW64 Windows based system.\n" );
-#else
-	printf( "This compiler system doesn't define __MINGW64__.\n" );
-#endif
-#ifdef __BYTE_ORDER__
-	printf( "This compiler system claims to be a " );
-  if( __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__ )  printf( "big" );
-  else if( __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__ )  printf( "little" );
-  else if( __BYTE_ORDER__ == __ORDER_PDP_ENDIAN__ )  printf( "little (word swapped)" );
-  else printf( "unknown" );
-  printf( " endian based system.\n" );
-#else
-	printf( "This compiler system doesn't define __BYTE_ORDER, at least not in <sys/param.h>\n" );
-#endif
-#ifdef CHAR_BIT
-  printf("The number of bits in a byte (\"CHAR_BIT\") is %d\n", CHAR_BIT);
-#endif
-#ifdef CHAR_MIN
-  printf("The most negetive value of char (\"CHAR_MIN\") is %d\n", CHAR_MIN);
-#endif
-#ifdef CHAR_MAX
-  printf("The most positive value of char (\"CHAR_MAX\") is %d\n", CHAR_MAX);
-#endif
-#ifdef UCHAR_MAX
-  printf("The maximum value of unsigned char (\"UCHAR_MAX\") is %d\n", UCHAR_MAX);
-#endif
-#ifdef SHRT_MIN 
-  printf("The most negetive value of short int (\"SHRT_MIN\") is %d\n", SHRT_MIN);
-#endif
-#ifdef SHRT_MAX 
-  printf("The most positive value of short int (\"SHRT_MAX\") is %d\n", SHRT_MAX);
-#endif
-#ifdef USHRT_MAX 
-  printf("The maximum value of unsigned short int (\"USHRT_MAX\") is %u\n", USHRT_MAX);
-#endif
-#ifdef INT_MIN 
-  printf("The most negetive value of int (\"INT_MIN\") is %d\n", INT_MIN);
-#endif
-#ifdef INT_MAX 
-  printf("The most positive value of int (\"INT_MAX\") is %d\n", INT_MAX);
-#endif
-#ifdef UINT_MAX 
-  printf("The maximum value of unsigned int (\"UINT_MAX\") is %u\n", UINT_MAX);
-#endif
-#ifdef LONG_MIN 
-  printf("The most negetive value of long int (\"LONG_MIN\") is %ld\n", LONG_MIN);
-#endif
-#ifdef LONG_MAX 
-  printf("The most positive value of long int (\"LONG_MAX\") is %ld\n", LONG_MAX);
-#endif
-#ifdef ULONG_MAX 
-  printf("The maximum value of unsigned long int (\"ULONG_MAX\") is %lu\n", ULONG_MAX);
-#endif
-#ifdef RAND_MAX 
-  printf("The maximum value produced by rand() (\"RAND_MAX\") is %d\n", RAND_MAX);
-#endif
-#ifdef CLOCKS
-	printf( "\nThis compiler/system has the following resolution timers/clocks; -\n" );
-	printClockResolutions();
-#ifdef __MINGW64__
-	printf( "The clock_gettime() function uses \"struct timespec\" (%llu bytes) to store nS time.\n", sizeof( struct timespec ));
-	printf( "The gettimeofday() function uses \"struct timeval\" (%llu bytes) to store uS time.\n", sizeof( struct timeval ));
-#else
-	printf( "The clock_gettime() function uses \"struct timespec\" (%lu bytes) to store nS time.\n", sizeof( struct timespec ));
-	printf( "The gettimeofday() function uses \"struct timeval\" (%lu bytes) to store uS time.\n", sizeof( struct timeval ));
-#endif	
-#endif
-  if( exePath != NULL )  free( exePath );
-	return 0;
-}

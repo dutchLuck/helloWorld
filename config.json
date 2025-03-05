@@ -1,0 +1,76 @@
+{
+	"after": {
+		"type": "optLng",
+		"default": 0,
+		"short": "a",
+		"long": "after",
+		"most_pos_limit": 10,
+		"most_neg_limit": 0,
+		"help": "INT .. output INT blank lines after hello - where 0 <= INT <= 10"
+	},
+	"before": {
+		"type": "optInt",
+		"default": 0,
+		"short": "b",
+		"long": "before",
+		"most_pos_limit": 10,
+		"most_neg_limit": 0,
+		"help": "INT .. output INT blank lines before hello - where 0 <= INT <= 10"
+	},
+	"clocks": {
+		"type": "optFlg",
+		"default": "false",
+		"short": "C",
+		"long": "clocks",
+		"help": "...... enable clock information in output"
+	},
+	"compiler": {
+		"type": "optFlg",
+		"default": "false",
+		"short": "c",
+		"long": "compiler",
+		"help": "...... enable compiler internal defines information in output"
+	},
+	"debug": {
+		"type": "optFlg",
+		"default": "false",
+		"short": "D",
+		"long": "debug",
+		"help": "...... enable debug output mode"
+	},
+	"help": {
+		"type": "optFlg",
+		"default": "false",
+		"short": "h",
+		"long": "help",
+		"help": "...... this help / usage information"
+	},
+	"message": {
+		"type": "optStr",
+		"default": "",
+		"short": "m",
+		"long": "message",
+		"help": "TXT .. output the TXT as a message after saying hello"
+	},
+	"numbers": {
+		"type": "optFlg",
+		"default": "false",
+		"short": "N",
+		"long": "numbers",
+		"help": "...... enable number size information in output"
+	},
+	"verbose": {
+		"type": "optFlg",
+		"default": "false",
+		"short": "v",
+		"long": "verbose",
+		"help": "...... enable more verbose information output"
+	},
+	"version": {
+		"type": "optFlg",
+		"default": "false",
+		"short": "V",
+		"long": "version",
+		"help": "...... enable version information output"
+	}
+}

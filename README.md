@@ -23,10 +23,14 @@ to be a Github Project.
 
 This code has been expanded a number of times to test out
 aspects of C compiler configuration or operation. For example
-it outputs a list of Pre-defined values known by the compiler.
+it can output a list of Pre-defined values known by the compiler.
+Most recently this project has been modified to use an automated
+method to generate the code to handle options. A set of options
+is specified in a json file and makes adding new options relatively
+easy.
 
-If this code is compiled with a -DCLOCKS options 
-the code will output the resolution of various clocks
+If this code is compiled with a -DCLOCKS option and run with 
+a -C option the code will output the resolution of various clocks
 and timers provided by the compiler system in combination
 with the operating system.
 
@@ -34,11 +38,7 @@ At the most rudimentary level of having a working C compiler
 on a UNIX or linux like system this code can be compiled from
 the command line with; -
 ```
-cc -o helloWorld helloWorld.c
-```
-OR
-```
-cc -DCLOCKS -o helloWorld helloWorld.c
+cc -DCLOCKS -o helloWorld helloWorld.c config.c genFun.c
 ```
 and run by typing; -
 ```
@@ -54,22 +54,54 @@ cd helloWorld
 make
 make check
 ```
-An example of the output from helloWorld on MacOS Sequoia 15.1.1
-when compiled with the -DCLOCKS option, is; -
+An example of the default output from helloWorld is; -
 ```
+% ./helloWorld        
+Hello World!
+% 
+```
+The helloWorld program has a number of options available; -
+```
+% ./helloWorld -h
+Usage:
+ helloWorld [-a INT][-b INT][-C][-c][-D][-h][-m TXT][-N][-v][-V] [FILES]
+ -a INT .. output INT blank lines after hello - where 0 <= INT <= 10
+ -b INT .. output INT blank lines before hello - where 0 <= INT <= 10
+ -C ...... enable clock information in output
+ -c ...... enable compiler internal defines information in output
+ -D ...... enable debug output mode
+ -h ...... this help / usage information
+ -m TXT .. output the TXT as a message after saying hello
+ -N ...... enable number size information in output
+ -v ...... enable more verbose information output
+ -V ...... enable version information output
+Hello World!
+%
+```
+Some of the options in use are; -
+```
+% ./helloWorld -v -b1 -a1 -m "Bye, see you later"
+helloWorld version 0v9
 
 Hello World, courtesy of 'helloWorld'
 
-'helloWorld' compiled from 'helloWorld.c', on Dec  9 2024 at 23:33:59
-Now executing line 227 in function 'main'
-Source File 'helloWorld.c' last Modified on Mon Dec  9 23:07:59 2024
+Bye, see you later
+%
+```
+The information options on a MacOS Sequoia system output; -
+```
+% ./helloWorld -c -C -N                          
+Hello World!
+'helloWorld' compiled from 'helloWorld.c', on Mar  5 2025 at 21:07:55
+Now executing line 100 in function 'main'
+Source File 'helloWorld.c' last Modified on Wed Mar  5 21:07:37 2025
 
 __STDC__ defined - Compiler claims conformance to ISO Standard C.
 __STDC_VERSION__ defined - Compiler claims conformance to ISO Standard C version 201710.
 __STDC_HOSTED__ defined - Compiler claims support for entire standard library.
 __GNUC__ defined as 4 - Compiled by gnu gcc or compatible compiler
 __GNUC_MINOR__ defined as 2, __GNUC_PATCHLEVEL__ defined as 1
-__VERSION__ defined - Compiler version 'Apple LLVM 16.0.0 (clang-1600.0.26.4)'
+__VERSION__ defined - Compiler version 'Apple LLVM 16.0.0 (clang-1600.0.26.6)'
 
 This compiler system doesn't define __unix__.
 This compiler system doesn't define __linux__.
@@ -97,37 +129,38 @@ The maximum value produced by rand() ("RAND_MAX") is 2147483647
 
 This compiler/system has the following resolution timers/clocks; -
 1000 [nS] resolution claimed for CLOCK_REALTIME
- CLOCK_REALTIME time is 1733747656.986469000 [S] i.e. Mon Dec  9 23:34:16 2024
- Time change noticed after 43 clock reads. Time stamp was 1733747656.986470000 [S] = Delta of 1000 [nS]
+ CLOCK_REALTIME time is 1741173224.967535000 [S] i.e. Wed Mar  5 21:13:44 2025
+ Time change noticed after 23 clock reads. Time stamp was 1741173224.967536000 [S] = Delta of 1000 [nS]
 
 1000 [nS] resolution claimed for CLOCK_MONOTONIC
- CLOCK_MONOTONIC time is 716404.570205000 [S]
- Time change noticed after 15 clock reads. Time stamp was 716404.570206000 [S] = Delta of 1000 [nS]
+ CLOCK_MONOTONIC time is 101904.294324000 [S]
+ Time change noticed after 15 clock reads. Time stamp was 101904.294325000 [S] = Delta of 1000 [nS]
 
 42 [nS] resolution claimed for CLOCK_MONOTONIC_RAW
- CLOCK_MONOTONIC_RAW time is 716410.845156250 [S]
- Time change noticed after 1 clock reads. Time stamp was 716410.845156333 [S] = Delta of 83 [nS]
+ CLOCK_MONOTONIC_RAW time is 101909.405377250 [S]
+ Time change noticed after 1 clock reads. Time stamp was 101909.405377291 [S] = Delta of 41 [nS]
 
 42 [nS] resolution claimed for CLOCK_MONOTONIC_RAW_APPROX
- CLOCK_MONOTONIC_RAW_APPROX time is 716410.845949333 [S]
- Time change noticed after 312 clock reads. Time stamp was 716410.845956250 [S] = Delta of 6917 [nS]
+ CLOCK_MONOTONIC_RAW_APPROX time is 101909.405388583 [S]
+ Time change noticed after 102 clock reads. Time stamp was 101909.405391750 [S] = Delta of 3167 [nS]
 
 42 [nS] resolution claimed for CLOCK_UPTIME_RAW
- CLOCK_UPTIME_RAW time is 98852.545927000 [S]
- Time change noticed after 1 clock reads. Time stamp was 98852.545927083 [S] = Delta of 83 [nS]
+ CLOCK_UPTIME_RAW time is 22980.669270250 [S]
+ Time change noticed after 1 clock reads. Time stamp was 22980.669270291 [S] = Delta of 41 [nS]
 
 42 [nS] resolution claimed for CLOCK_UPTIME_RAW_APPROX
- CLOCK_UPTIME_RAW_APPROX time is 98852.545938833 [S]
- Time change noticed after 44569 clock reads. Time stamp was 98852.546801916 [S] = Delta of 863083 [nS]
+ CLOCK_UPTIME_RAW_APPROX time is 22980.669279125 [S]
+ Time change noticed after 12057 clock reads. Time stamp was 22980.669671458 [S] = Delta of 392333 [nS]
 
 1000 [nS] resolution claimed for CLOCK_PROCESS_CPUTIME_ID
- CLOCK_PROCESS_CPUTIME_ID time is 0.014877000 [S]
- Time change noticed after 1 clock reads. Time stamp was 0.014879000 [S] = Delta of 2000 [nS]
+ CLOCK_PROCESS_CPUTIME_ID time is 0.005502000 [S]
+ Time change noticed after 1 clock reads. Time stamp was 0.005503000 [S] = Delta of 1000 [nS]
 
 42 [nS] resolution claimed for CLOCK_THREAD_CPUTIME_ID
- CLOCK_THREAD_CPUTIME_ID time is 0.014883291 [S]
- Time change noticed after 1 clock reads. Time stamp was 0.014883708 [S] = Delta of 417 [nS]
+ CLOCK_THREAD_CPUTIME_ID time is 0.005513750 [S]
+ Time change noticed after 1 clock reads. Time stamp was 0.005514083 [S] = Delta of 333 [nS]
 
 The clock_gettime() function uses "struct timespec" (16 bytes) to store nS time.
 The gettimeofday() function uses "struct timeval" (16 bytes) to store uS time.
+%
 ```

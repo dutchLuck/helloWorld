@@ -1,0 +1,22 @@
+#! /bin/sh
+#
+# T S T
+#
+# tst last edited on Wed Mar  5 21:36:29 2025 
+#
+# To redirect both stdout and stderr to a file, use ampersand redirect operation, for example; -
+#  ./tst &> outputFile
+#
+EXE=helloWorld
+TEN_PLUSS=++++++++++
+#
+echo ""
+echo "${TEN_PLUSS} $EXE   +++Default no options check${TEN_PLUSS}"
+../$EXE
+echo "${TEN_PLUSS} Shell got Return code number $? for no options check${TEN_PLUSS}"
+#
+echo ""
+echo "${TEN_PLUSS} $EXE -v -b1 -a1 +++Before, after and verbose options check${TEN_PLUSS}"
+../$EXE -v -b1 -a1
+echo "${TEN_PLUSS} Shell got Return code number $? for before, after and verbose options check${TEN_PLUSS}"
+#
