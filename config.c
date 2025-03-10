@@ -49,7 +49,7 @@ int  configureDoubleOption( struct optDbl *  dblStructPtr, char *  dblString ) {
 // Functions for Command Line Options Configuration from JSON Data
 void  usage( struct config *  opt, char *  exeName )  {
   printf( "Usage:\n");
-  printf( " %s [-a INT][-b INT][-C][-c][-D][-h][-m TXT][-N][-v][-V] [FILES]\n", exeName );
+  printf( " %s [-a INT][-b INT][-C][-c][-D][-h][-m TXT][-N][-v][-V]\n", exeName );
   printf( " %s %s\n", opt->a.optID, opt->a.helpStr ); /* after */
   printf( " %s %s\n", opt->b.optID, opt->b.helpStr ); /* before */
   printf( " %s %s\n", opt->C.optID, opt->C.helpStr ); /* clocks */
