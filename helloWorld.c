@@ -5,7 +5,7 @@
  * Explore aspects of the compiler MACRO definitions
  *  and underlying system capabilties.
  *
- * helloWorld.c last edited on Mon May  5 20:47:40 2025 
+ * helloWorld.c last edited on Mon May  5 21:06:59 2025 
  *
  */
 
@@ -38,7 +38,7 @@
 #include  <sys/time.h>	/* struct timeval used by gettimeofday() */
 #endif
 
-#define VERSION_INFO "0v11"
+#define VERSION_INFO "0v12"
 
 #ifdef CLOCKS
 void  printClockResolutions( void );
@@ -213,7 +213,7 @@ int  main( int  argc, char *  argv[])  {
     printf("The unsigned char maximum value (\"UCHAR_MAX\") is %d\n", UCHAR_MAX);
 #endif
 #ifdef __SIZEOF_SHORT__ 
-    printf("The short int has a size of (\"__SIZEOF_SHORT__\") %d bytes\n", __SIZEOF_SHORT__);
+    printf("The short int number type has a size of (\"__SIZEOF_SHORT__\") %d bytes\n", __SIZEOF_SHORT__);
 #endif
 #ifdef SHRT_MIN 
     printf("The short int most negetive value (\"SHRT_MIN\") is %d\n", SHRT_MIN);
@@ -225,7 +225,7 @@ int  main( int  argc, char *  argv[])  {
     printf("The unsigned short int maximum value (\"USHRT_MAX\") is %u\n", USHRT_MAX);
 #endif
 #ifdef __SIZEOF_INT__ 
-    printf("The int has a size of (\"__SIZEOF_INT__\") %d bytes\n", __SIZEOF_INT__);
+    printf("The int number type has a size of (\"__SIZEOF_INT__\") %d bytes\n", __SIZEOF_INT__);
 #endif
 #ifdef INT_MIN 
     printf("The int most negetive value (\"INT_MIN\") is %d\n", INT_MIN);
@@ -237,7 +237,7 @@ int  main( int  argc, char *  argv[])  {
     printf("The unsigned int maximum value (\"UINT_MAX\") is %u\n", UINT_MAX);
 #endif
 #ifdef __SIZEOF_LONG__ 
-    printf("The long int has a size of (\"__SIZEOF_LONG__\") %d bytes\n", __SIZEOF_LONG__);
+    printf("The long int number type has a size of (\"__SIZEOF_LONG__\") %d bytes\n", __SIZEOF_LONG__);
 #endif
 #ifdef LONG_MIN 
     printf("The long int most negetive value (\"LONG_MIN\") is %ld\n", LONG_MIN);
@@ -247,6 +247,18 @@ int  main( int  argc, char *  argv[])  {
 #endif
 #ifdef ULONG_MAX 
     printf("The unsigned long int maximum value (\"ULONG_MAX\") is %lu\n", ULONG_MAX);
+#endif
+#ifdef __SIZEOF_LONG_LONG__ 
+    printf("The long long int number type has a size of (\"__SIZEOF_LONG_LONG__\") %d bytes\n", __SIZEOF_LONG_LONG__);
+#endif
+#ifdef LLONG_MIN
+    printf("The long long int most negetive value (\"LLONG_MIN\") is %lld\n", LLONG_MIN);
+#endif
+#ifdef LLONG_MAX 
+    printf("The long long int most positive value (\"LLONG_MAX\") is %lld\n", LLONG_MAX);
+#endif
+#ifdef ULLONG_MAX 
+    printf("The unsigned long long int maximum value (\"ULLONG_MAX\") is %llu\n", ULLONG_MAX);
 #endif
 #ifdef RAND_MAX 
     printf("The rand() maximum value (\"RAND_MAX\") is %d\n", RAND_MAX);
