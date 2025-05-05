@@ -5,7 +5,7 @@
  * Explore aspects of the compiler MACRO definitions
  *  and underlying system capabilties.
  *
- * helloWorld.c last edited on Wed Mar  5 16:23:14 2025 
+ * helloWorld.c last edited on Mon May  5 16:22:58 2025 
  *
  */
 
@@ -31,13 +31,14 @@
 #include  <libgen.h>	/* basename() */
 #include  <sys/param.h>	/* Endian macros? */
 #include  <limits.h>    /* MIN and MAX size of number types */
+#include  <float.h>     /* MIN and MAX size of floating point numbers */
 #include  "config.h"    /* init Configuration */
 #ifdef CLOCKS
 #include  <time.h>		/* clock_gettime() clock_getres() and struct timespec */
 #include  <sys/time.h>	/* struct timeval used by gettimeofday() */
 #endif
 
-#define VERSION_INFO "0v9"
+#define VERSION_INFO "0v10"
 
 #ifdef CLOCKS
 void  printClockResolutions( void );
@@ -240,6 +241,51 @@ int  main( int  argc, char *  argv[])  {
 #endif
 #ifdef RAND_MAX 
     printf("The maximum value produced by rand() (\"RAND_MAX\") is %d\n", RAND_MAX);
+#endif
+#ifdef FLT_MAX 
+    printf("The maximum float precision floating point value (\"FLT_MAX\") is %g\n", FLT_MAX);
+#endif
+#ifdef FLT_MIN 
+    printf("The minimum float precision floating point value (\"FLT_MIN\") is %g\n", FLT_MIN);
+#endif
+#ifdef FLT_DIG 
+    printf("The float precision floating point value (\"FLT_DIG\") has %d digits\n", FLT_DIG);
+#endif
+#ifdef FLT_DECIMAL_DIG
+    printf("The float precision floating point value (\"FLT_DECIMAL_DIG\") has %d decimal digits\n", FLT_DECIMAL_DIG);
+#endif
+#ifdef FLT_MANT_DIG
+    printf("The float precision floating point value (\"FLT_MANT_DIG\") has %d mantissa bits\n", FLT_MANT_DIG);
+#endif
+#ifdef DBL_MAX 
+    printf("The maximum double precision floating point value (\"DBL_MAX\") is %lg\n", DBL_MAX);
+#endif
+#ifdef DBL_MIN 
+    printf("The minimum double precision floating point value (\"DBL_MIN\") is %lg\n", DBL_MIN);
+#endif
+#ifdef DBL_DIG 
+    printf("The double precision floating point value (\"DBL_DIG\") has %d digits\n", DBL_DIG);
+#endif
+#ifdef DBL_DECIMAL_DIG
+    printf("The double precision floating point value (\"DBL_DECIMAL_DIG\") has %d decimal digits\n", DBL_DECIMAL_DIG);
+#endif
+#ifdef DBL_MANT_DIG
+    printf("The double precision floating point value (\"DBL_MANT_DIG\") has %d mantissa bits\n", DBL_MANT_DIG);
+#endif
+#ifdef LDBL_MAX 
+    printf("The maximum long double precision floating point value (\"LDBL_MAX\") is %Lg\n", LDBL_MAX);
+#endif
+#ifdef LDBL_MIN 
+    printf("The minimum long double precision floating point value (\"LDBL_MIN\") is %Lg\n", LDBL_MIN);
+#endif
+#ifdef LDBL_DIG 
+    printf("The long double precision floating point value (\"LDBL_DIG\") has %d digits\n", LDBL_DIG);
+#endif
+#ifdef LDBL_DECIMAL_DIG
+    printf("The long double precision floating point value (\"LDBL_DECIMAL_DIG\") has %d decimal digits\n", LDBL_DECIMAL_DIG);
+#endif
+#ifdef LDBL_MANT_DIG
+    printf("The long double precision floating point value (\"LDBL_MANT_DIG\") has %d mantissa bits\n", LDBL_MANT_DIG);
 #endif
   }
 #ifdef CLOCKS
