@@ -5,7 +5,7 @@
  * Explore aspects of the compiler MACRO definitions
  *  and underlying system capabilties.
  *
- * helloWorld.c last edited on Mon May  5 16:22:58 2025 
+ * helloWorld.c last edited on Mon May  5 20:47:40 2025 
  *
  */
 
@@ -38,7 +38,7 @@
 #include  <sys/time.h>	/* struct timeval used by gettimeofday() */
 #endif
 
-#define VERSION_INFO "0v10"
+#define VERSION_INFO "0v11"
 
 #ifdef CLOCKS
 void  printClockResolutions( void );
@@ -201,52 +201,64 @@ int  main( int  argc, char *  argv[])  {
 	  printf( "This compiler system doesn't define __BYTE_ORDER, at least not in <sys/param.h>\n" );
 #endif
 #ifdef CHAR_BIT
-    printf("The number of bits in a byte (\"CHAR_BIT\") is %d\n", CHAR_BIT);
+    printf("The char number of bits (\"CHAR_BIT\") is %d\n", CHAR_BIT);
 #endif
 #ifdef CHAR_MIN
-    printf("The most negetive value of char (\"CHAR_MIN\") is %d\n", CHAR_MIN);
+    printf("The char most negetive value (\"CHAR_MIN\") is %d\n", CHAR_MIN);
 #endif
 #ifdef CHAR_MAX
-    printf("The most positive value of char (\"CHAR_MAX\") is %d\n", CHAR_MAX);
+    printf("The char most positive value (\"CHAR_MAX\") is %d\n", CHAR_MAX);
 #endif
 #ifdef UCHAR_MAX
-    printf("The maximum value of unsigned char (\"UCHAR_MAX\") is %d\n", UCHAR_MAX);
+    printf("The unsigned char maximum value (\"UCHAR_MAX\") is %d\n", UCHAR_MAX);
+#endif
+#ifdef __SIZEOF_SHORT__ 
+    printf("The short int has a size of (\"__SIZEOF_SHORT__\") %d bytes\n", __SIZEOF_SHORT__);
 #endif
 #ifdef SHRT_MIN 
-    printf("The most negetive value of short int (\"SHRT_MIN\") is %d\n", SHRT_MIN);
+    printf("The short int most negetive value (\"SHRT_MIN\") is %d\n", SHRT_MIN);
 #endif
 #ifdef SHRT_MAX 
-    printf("The most positive value of short int (\"SHRT_MAX\") is %d\n", SHRT_MAX);
+    printf("The short int most positive value (\"SHRT_MAX\") is %d\n", SHRT_MAX);
 #endif
 #ifdef USHRT_MAX 
-    printf("The maximum value of unsigned short int (\"USHRT_MAX\") is %u\n", USHRT_MAX);
+    printf("The unsigned short int maximum value (\"USHRT_MAX\") is %u\n", USHRT_MAX);
+#endif
+#ifdef __SIZEOF_INT__ 
+    printf("The int has a size of (\"__SIZEOF_INT__\") %d bytes\n", __SIZEOF_INT__);
 #endif
 #ifdef INT_MIN 
-    printf("The most negetive value of int (\"INT_MIN\") is %d\n", INT_MIN);
+    printf("The int most negetive value (\"INT_MIN\") is %d\n", INT_MIN);
 #endif
 #ifdef INT_MAX 
-    printf("The most positive value of int (\"INT_MAX\") is %d\n", INT_MAX);
+    printf("The int most positive value (\"INT_MAX\") is %d\n", INT_MAX);
 #endif
 #ifdef UINT_MAX 
-    printf("The maximum value of unsigned int (\"UINT_MAX\") is %u\n", UINT_MAX);
+    printf("The unsigned int maximum value (\"UINT_MAX\") is %u\n", UINT_MAX);
+#endif
+#ifdef __SIZEOF_LONG__ 
+    printf("The long int has a size of (\"__SIZEOF_LONG__\") %d bytes\n", __SIZEOF_LONG__);
 #endif
 #ifdef LONG_MIN 
-    printf("The most negetive value of long int (\"LONG_MIN\") is %ld\n", LONG_MIN);
+    printf("The long int most negetive value (\"LONG_MIN\") is %ld\n", LONG_MIN);
 #endif
 #ifdef LONG_MAX 
-    printf("The most positive value of long int (\"LONG_MAX\") is %ld\n", LONG_MAX);
+    printf("The long int most positive value (\"LONG_MAX\") is %ld\n", LONG_MAX);
 #endif
 #ifdef ULONG_MAX 
-    printf("The maximum value of unsigned long int (\"ULONG_MAX\") is %lu\n", ULONG_MAX);
+    printf("The unsigned long int maximum value (\"ULONG_MAX\") is %lu\n", ULONG_MAX);
 #endif
 #ifdef RAND_MAX 
-    printf("The maximum value produced by rand() (\"RAND_MAX\") is %d\n", RAND_MAX);
+    printf("The rand() maximum value (\"RAND_MAX\") is %d\n", RAND_MAX);
+#endif
+#ifdef __SIZEOF_FLOAT__ 
+    printf("The float precision number has a size of (\"__SIZEOF_FLOAT__\") %d bytes\n", __SIZEOF_FLOAT__);
 #endif
 #ifdef FLT_MAX 
-    printf("The maximum float precision floating point value (\"FLT_MAX\") is %g\n", FLT_MAX);
+    printf("The float precision maximum floating point value (\"FLT_MAX\") is %g\n", FLT_MAX);
 #endif
 #ifdef FLT_MIN 
-    printf("The minimum float precision floating point value (\"FLT_MIN\") is %g\n", FLT_MIN);
+    printf("The float precision minimum floating point value (\"FLT_MIN\") is %g\n", FLT_MIN);
 #endif
 #ifdef FLT_DIG 
     printf("The float precision floating point value (\"FLT_DIG\") has %d digits\n", FLT_DIG);
@@ -257,11 +269,17 @@ int  main( int  argc, char *  argv[])  {
 #ifdef FLT_MANT_DIG
     printf("The float precision floating point value (\"FLT_MANT_DIG\") has %d mantissa bits\n", FLT_MANT_DIG);
 #endif
+#ifdef FLT_EPSILON
+    printf("The float precision epsilon floating point value (\"FLT_EPSILON\") is %g\n", FLT_EPSILON);
+#endif
+#ifdef __SIZEOF_DOUBLE__ 
+    printf("The double precision number has a size of (\"__SIZEOF_DOUBLE__\") %d bytes\n", __SIZEOF_DOUBLE__);
+#endif
 #ifdef DBL_MAX 
-    printf("The maximum double precision floating point value (\"DBL_MAX\") is %lg\n", DBL_MAX);
+    printf("The double precision maximum floating point value (\"DBL_MAX\") is %lg\n", DBL_MAX);
 #endif
 #ifdef DBL_MIN 
-    printf("The minimum double precision floating point value (\"DBL_MIN\") is %lg\n", DBL_MIN);
+    printf("The double precision minimum floating point value (\"DBL_MIN\") is %lg\n", DBL_MIN);
 #endif
 #ifdef DBL_DIG 
     printf("The double precision floating point value (\"DBL_DIG\") has %d digits\n", DBL_DIG);
@@ -272,11 +290,17 @@ int  main( int  argc, char *  argv[])  {
 #ifdef DBL_MANT_DIG
     printf("The double precision floating point value (\"DBL_MANT_DIG\") has %d mantissa bits\n", DBL_MANT_DIG);
 #endif
+#ifdef DBL_EPSILON
+    printf("The double precision epsilon floating point value (\"DBL_EPSILON\") is %lg\n", DBL_EPSILON);
+#endif
+#ifdef __SIZEOF_LONG_DOUBLE__ 
+    printf("The long double precision number has a size of (\"__SIZEOF_LONG_DOUBLE__\") %d bytes\n", __SIZEOF_LONG_DOUBLE__);
+#endif
 #ifdef LDBL_MAX 
-    printf("The maximum long double precision floating point value (\"LDBL_MAX\") is %Lg\n", LDBL_MAX);
+    printf("The long double precision maximum floating point value (\"LDBL_MAX\") is %Lg\n", LDBL_MAX);
 #endif
 #ifdef LDBL_MIN 
-    printf("The minimum long double precision floating point value (\"LDBL_MIN\") is %Lg\n", LDBL_MIN);
+    printf("The long double precision minimum floating point value (\"LDBL_MIN\") is %Lg\n", LDBL_MIN);
 #endif
 #ifdef LDBL_DIG 
     printf("The long double precision floating point value (\"LDBL_DIG\") has %d digits\n", LDBL_DIG);
@@ -286,6 +310,9 @@ int  main( int  argc, char *  argv[])  {
 #endif
 #ifdef LDBL_MANT_DIG
     printf("The long double precision floating point value (\"LDBL_MANT_DIG\") has %d mantissa bits\n", LDBL_MANT_DIG);
+#endif
+#ifdef LDBL_EPSILON
+    printf("The long double precision epsilon floating point value (\"LDBL_EPSILON\") is %Lg\n", LDBL_EPSILON);
 #endif
   }
 #ifdef CLOCKS
