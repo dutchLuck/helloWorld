@@ -5,7 +5,7 @@
  * Explore aspects of the compiler MACRO definitions
  *  and underlying system capabilties.
  *
- * helloWorld.c last edited on Wed Oct  1 23:21:12 2025 
+ * helloWorld.c last edited on Wed Oct  1 23:33:12 2025 
  *
  */
 
@@ -25,6 +25,7 @@
  */
 
 /*
+ * 0v14 Fix recently added warning message for -C
  * 0v13 Added warning message to inform user who specifies -C
  * when the -DCLOCKS wasn't used at compile time
  *
@@ -43,7 +44,7 @@
 #include  <sys/time.h>	/* struct timeval used by gettimeofday() */
 #endif
 
-#define VERSION_INFO "0v13"
+#define VERSION_INFO "0v14"
 
 #ifdef CLOCKS
 void  printClockResolutions( void );
@@ -346,8 +347,8 @@ int  main( int  argc, char *  argv[])  {
   }
 #else /* i.e. CLOCKS not defined */
   if ( config.C.active )  {
-    printf( "Warning: -C specified, but no clock code was compiled into this binary.")
-    printf( "You could try recompiling the source with the -DCLOCKS flag specified.")
+    printf( "Warning: -C specified, but no clock code was compiled into this executable.\n");
+    printf( " You could try recompiling the source with the -DCLOCKS flag specified.\n");
   }
 #endif
 	return 0;
