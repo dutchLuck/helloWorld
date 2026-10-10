@@ -1,7 +1,10 @@
 /*
  * G E N F U N . C
  *
- * genFun.c last edited Mon May  5 20:47:31 2025
+ * genFun.c last edited Sat Oct 10 20:52:31 2026
+ *
+ * 2026-Oct-10 Added microsoft windows cl compiler workaround
+ *  for no __SIZEOF_INT__ definition so define it as sizeof( int )
  * 
  */
 
@@ -45,6 +48,9 @@ void  fillFirstByteArrayByReplicatingSecondByteArray( unsigned char *  firstArra
 	}
 }
 
+#ifndef __SIZEOF_INT__	/* If the compiler doesn't define __SIZEOF_INT__ then define it as sizeof( int ) */
+#define __SIZEOF_INT__ (int)sizeof( int )
+#endif
 
 /* fillByteArrayWithPseudoRandomData( icmpDataPtr, icmpMsgSize ) */
 void  fillByteArrayWithPseudoRandomData( unsigned char *  array, int  arraySize )  {

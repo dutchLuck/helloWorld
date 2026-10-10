@@ -8,7 +8,11 @@
 
 #include <stdio.h>    /* printf() */
 #include <stdlib.h>   /* floating point double */
+#ifdef _MSC_VER
+#include "getopt.h"
+#else
 #include <unistd.h>   /* getopt() */
+#endif
 #include <ctype.h>    /* isprint()*/
 #include <limits.h>   /* INT_MIN INT_MAX LONG_MIN LONG_MAX */
 #include <float.h>    /* DBL_MIN DBL_MAX */

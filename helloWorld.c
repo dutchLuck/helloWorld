@@ -34,8 +34,10 @@
 #include  <stdio.h>   /* printf(), perror() */
 #include  <stdlib.h>  /* free() */
 #include  <string.h>	/* strdup() */
+#ifndef _MSC_VER
 #include  <libgen.h>	/* basename() */
 #include  <sys/param.h>	/* Endian macros? */
+#endif
 #include  <limits.h>    /* MIN and MAX size of number types */
 #include  <float.h>     /* MIN and MAX size of floating point numbers */
 #include  "config.h"    /* init Configuration */
@@ -144,6 +146,11 @@ int  main( int  argc, char *  argv[])  {
 #else
 	  printf( "Compiler does not define version with __VERSION__\n" );
 #endif
+#ifdef _MSC_VER
+    printf( "_MSC_VER defined - Compiler version %d\n", _MSC_VER );
+#else
+    printf( "Compiler does not define version with _MSC_VER\n" );
+#endif
   	printf( "\n" );
 #ifdef __unix__
   	printf( "__unix__ defined - " );
@@ -192,6 +199,18 @@ int  main( int  argc, char *  argv[])  {
   	printf( "This compiler system claims to be a MINGW64 Windows based system.\n" );
 #else
 	  printf( "This compiler system doesn't define __MINGW64__.\n" );
+#endif
+#ifdef _WIN32
+  	printf( "_WIN32 defined - " );
+  	printf( "This compiler system claims to be a WIN32 Windows based system.\n" );
+#else
+	  printf( "This compiler system doesn't define _WIN32.\n" );
+#endif
+#ifdef _WIN64
+	  printf( "_WIN64 defined - " );
+  	printf( "This compiler system claims to be a WIN64 Windows based system.\n" );
+#else
+	  printf( "This compiler system doesn't define _WIN64.\n" );
 #endif
   }
 
@@ -355,11 +374,22 @@ int  main( int  argc, char *  argv[])  {
 }
 
 
+char * my_basename( char *  path )  {
+  if (!path) {
+    return ".";
+  }
+  char * p1 = strrchr( path, '\\' );
+  char * p2 = strrchr( path, '/' );
+  char * p = ( p1 > p2 ) ? p1 : p2;
+  return p ? ( p + 1 ) : path;
+}
+
+
 void  setExecutableName( char *  argv[] ) {
 /* Isolate the name of the executable */
   if(( exePath = strdup( argv[0] )) == NULL )
     perror( "Warning: Unable to create duplicate of path to this executable" );
-  else if(( exeName = basename( exePath )) == NULL )  {
+  else if(( exeName = my_basename( exePath )) == NULL )  {
     perror( "Warning: Unable to obtain the name of this executable" );
   }
   if ( exeName == NULL )  exeName = argv[ 0 ];
