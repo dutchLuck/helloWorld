@@ -16,7 +16,17 @@ echo "${TEN_PLUSS} $EXE   +++Default no options check${TEN_PLUSS}"
 echo "${TEN_PLUSS} Shell got Return code number $? for no options check${TEN_PLUSS}"
 #
 echo ""
-echo "${TEN_PLUSS} $EXE -v -b1 -a1 +++Before, after and verbose options check${TEN_PLUSS}"
-../$EXE -v -b1 -a1
-echo "${TEN_PLUSS} Shell got Return code number $? for before, after and verbose options check${TEN_PLUSS}"
+echo "${TEN_PLUSS} $EXE -b2 -a2 +++Before and after options check${TEN_PLUSS}"
+../$EXE -b2 -a2
+echo "${TEN_PLUSS} Shell got Return code number $? for before and after options check${TEN_PLUSS}"
+#
+echo ""
+echo "${TEN_PLUSS} $EXE -m "Extra message" +++Extra message options check${TEN_PLUSS}"
+../$EXE -m "Extra message"
+echo "${TEN_PLUSS} Shell got Return code number $? for extra message option check${TEN_PLUSS}"
+#
+echo ""
+echo "${TEN_PLUSS} $EXE -v +++Verbose option check${TEN_PLUSS}"
+../$EXE -v 
+echo "${TEN_PLUSS} Shell got Return code number $? for verbose option check${TEN_PLUSS}"
 #

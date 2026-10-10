@@ -5,7 +5,7 @@
  * Explore aspects of the compiler MACRO definitions
  *  and underlying system capabilties.
  *
- * helloWorld.c last edited on Wed Oct  1 23:33:12 2025 
+ * helloWorld.c last edited on Sat Oct 10 21:46:12 2026 
  *
  */
 
@@ -25,6 +25,7 @@
  */
 
 /*
+ * 0v15 Added my_basename() and other microsoft cl compatibility
  * 0v14 Fix recently added warning message for -C
  * 0v13 Added warning message to inform user who specifies -C
  * when the -DCLOCKS wasn't used at compile time
@@ -46,7 +47,7 @@
 #include  <sys/time.h>	/* struct timeval used by gettimeofday() */
 #endif
 
-#define VERSION_INFO "0v14"
+#define VERSION_INFO "0v15"
 
 #ifdef CLOCKS
 void  printClockResolutions( void );

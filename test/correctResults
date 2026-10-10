@@ -3,9 +3,20 @@
 Hello World!
 ++++++++++ Shell got Return code number 0 for no options check++++++++++
 
-++++++++++ helloWorld -v -b1 -a1 +++Before, after and verbose options check++++++++++
-helloWorld version 0v12
+++++++++++ helloWorld -b2 -a2 +++Before and after options check++++++++++
 
+
+Hello World!
+
+
+++++++++++ Shell got Return code number 0 for before and after options check++++++++++
+
+++++++++++ helloWorld -m Extra message +++Extra message options check++++++++++
+Hello World!
+Extra message
+++++++++++ Shell got Return code number 0 for extra message option check++++++++++
+
+++++++++++ helloWorld -v +++Verbose option check++++++++++
+helloWorld version 0v15
 Hello World, courtesy of 'helloWorld'
-
-++++++++++ Shell got Return code number 0 for before, after and verbose options check++++++++++
+++++++++++ Shell got Return code number 0 for verbose option check++++++++++

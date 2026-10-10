@@ -1,17 +1,20 @@
 /*
  * C O N F I G . C
  *
- * Last Modified on Mon Jun 23 19:14:05 2025
+ * Last Modified on Sat Oct 10 20:47:05 2026
  *
+ * 2026-Oct-10 Added microsoft windows cl compiler
+ *  workaround for getopt() by including the getopt.*
+ *  from https://github.com/Chunde/getopt-for-windows
  * 2025-Jun-22 Added Chr option handling
  */
 
 #include <stdio.h>    /* printf() */
 #include <stdlib.h>   /* floating point double */
 #ifdef _MSC_VER
-#include "getopt.h"
+#include "getopt.h"   /* getopt() from github.com/Chunde/getopt-for-windows */
 #else
-#include <unistd.h>   /* getopt() */
+#include <unistd.h>   /* getopt() on unix / linux */
 #endif
 #include <ctype.h>    /* isprint()*/
 #include <limits.h>   /* INT_MIN INT_MAX LONG_MIN LONG_MAX */
